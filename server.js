@@ -3,6 +3,8 @@ const path = require("path");
 
 require("dotenv").config();
 
+require("./config/database");
+
 const app = express();
 
 app.use(express.json());
