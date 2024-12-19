@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import LoginForm from "./LoginForm";
+import RegistrationForm from "./RegistrationForm";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 import { useNavigate } from "react-router";
 
-export default function Login() {
+export default function Registration() {
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
 
@@ -17,14 +17,14 @@ export default function Login() {
   return (
     <div className="container border border-primary">
       <div className="m-3">
-        <h2 className="text-center">Login</h2>
+        <h2 className="text-center">Register</h2>
       </div>
       <div className="m-3">
-        <LoginForm />
+        <RegistrationForm />
       </div>
       <div className="input-group mb-3 justify-content-md-center">
-        <a href="/register" className="text-decoration-none">
-          Not a member of Readers Network? Register here
+        <a href="/login" className="text-decoration-none">
+          Already a member of Readers Network? Login here
         </a>
       </div>
     </div>

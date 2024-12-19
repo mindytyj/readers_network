@@ -1,5 +1,7 @@
 import { useState } from "react";
 import * as usersTokenHandlers from "../../handlers/users-token-handlers";
+import { useSetAtom } from "jotai";
+import { userAtom } from "../../handlers/userAtom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +13,7 @@ export default function LoginForm() {
     password: "",
   });
   const [error, setError] = useState("");
+  const setUser = useSetAtom(userAtom);
 
   function handleChange(evt) {
     setUserInfo({ ...userInfo, [evt.target.name]: evt.target.value });
@@ -22,7 +25,7 @@ export default function LoginForm() {
 
     try {
       const user = await usersTokenHandlers.login(userInfo);
-      setUserInfo(user);
+      setUser(user);
     } catch {
       setError("Username or password is incorrect. Please try again.");
     }
