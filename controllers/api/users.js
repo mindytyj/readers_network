@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { pool } = require("../../config/database");
 
 async function login(req, res) {
@@ -20,7 +21,7 @@ async function login(req, res) {
     );
     if (!match) throw new Error("Incorrect password provided.");
 
-    res.status(200).json(user);
+    res.status(200).json(createJWTToken(user.rows[0]));
   } catch (err) {
     console.error(err.message);
     res.status(400).json(err.message);
@@ -51,11 +52,15 @@ async function register(req, res) {
       [req.body.username]
     );
 
-    res.status(200).json(user);
+    res.status(200).json(createJWTToken(user.rows[0]));
   } catch (err) {
     console.error(err.message);
     res.status(400).json(err.message);
   }
+}
+
+function createJWTToken(user) {
+  return jwt.sign({ user }, process.env.SECRET, { expiresIn: "1h" });
 }
 
 module.exports = {
