@@ -3,13 +3,24 @@ import * as usersAPIRequests from "./users-api-requests";
 export async function login(userInfo) {
   const jwtToken = await usersAPIRequests.login(userInfo);
   localStorage.setItem("token", jwtToken);
-  return jwtToken;
+  return getUser();
 }
 
 export async function register(userInfo) {
   const jwtToken = await usersAPIRequests.register(userInfo);
   localStorage.setItem("token", jwtToken);
-  return jwtToken;
+  return getUser();
+}
+
+export function logout() {
+  localStorage.removeItem("token");
+}
+
+export async function updateProfile(userId, userInfo) {
+  const jwtToken = await usersAPIRequests.updateProfile(userId, userInfo);
+  localStorage.removeItem("token");
+  localStorage.setItem("token", jwtToken);
+  return getUser();
 }
 
 export function getJWTToken() {

@@ -8,3 +8,11 @@ export function login(userInfo) {
 export function register(userInfo) {
   return requestHandler(`${BASE_URL}/register`, "POST", userInfo);
 }
+
+export function updateProfile(userId, userInfo) {
+  return requestHandler(
+    `${BASE_URL}/${userId}/update-profile`,
+    "PUT",
+    userInfo
+  );
+}

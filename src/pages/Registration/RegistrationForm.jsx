@@ -42,7 +42,7 @@ export default function RegistrationForm() {
       <div className="row mb-3">
         <div className="input-group">
           <label htmlFor="firstLastName" className="col-sm-2 col-form-label">
-            First and Last Name
+            First and Last Name <span className="text-danger">*</span>
           </label>
           <input
             type="text"
@@ -68,7 +68,7 @@ export default function RegistrationForm() {
       </div>
       <div className="row mb-3">
         <label htmlFor="username" className="col-sm-2 col-form-label">
-          Username
+          Username <span className="text-danger">*</span>
         </label>
         <div className="col-sm-7">
           <input
@@ -85,7 +85,7 @@ export default function RegistrationForm() {
       </div>
       <div className="row mb-3">
         <label htmlFor="password" className="col-sm-2 col-form-label">
-          Password
+          Password <span className="text-danger">*</span>
         </label>
         <div className="col-sm-7">
           <input
@@ -105,7 +105,7 @@ export default function RegistrationForm() {
       </div>
       <div className="row mb-3">
         <label htmlFor="confirmPW" className="col-sm-2 col-form-label">
-          Confirm Password
+          Confirm Password <span className="text-danger">*</span>
         </label>
         <div className="col-sm-7">
           <input

@@ -59,6 +59,43 @@ async function register(req, res) {
   }
 }
 
+async function updateProfile(req, res) {
+  const userId = req.params.userId;
+  try {
+    const hashedPW = await bcrypt.hash(
+      req.body.password,
+      parseInt(process.env.SALT_ROUNDS)
+    );
+
+    await pool.query("UPDATE users SET first_name = ($1) WHERE id = ($2)", [
+      req.body.firstName,
+      userId,
+    ]);
+
+    await pool.query("UPDATE users SET last_name = ($1) WHERE id = ($2)", [
+      req.body.lastName,
+      userId,
+    ]);
+
+    await pool.query("UPDATE users SET password = ($1) WHERE id = ($2)", [
+      req.body.password,
+      userId,
+    ]);
+
+    const user = await pool.query(
+      "SELECT id, first_name, last_name, username FROM users WHERE id = ($1)",
+      [userId]
+    );
+
+    if (!user) throw new Error("User not found.");
+
+    res.status(200).json(createJWTToken(user.rows[0]));
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json(err.message);
+  }
+}
+
 function createJWTToken(user) {
   return jwt.sign({ user }, process.env.SECRET, { expiresIn: "1h" });
 }
@@ -66,4 +103,5 @@ function createJWTToken(user) {
 module.exports = {
   login,
   register,
+  updateProfile,
 };
