@@ -5,7 +5,7 @@ export default function AccountSettings({ user }) {
 
   return (
     <div className="card border-primary mb-3">
-      <div className="card-header">Profile Settings</div>
+      <div className="card-header text-white bg-dark">Profile Settings</div>
       <div className="card-body">
         <div className="mb-3 row">
           <label htmlFor="firstName" className="col-sm-2 col-form-label">
@@ -17,7 +17,7 @@ export default function AccountSettings({ user }) {
               readOnly
               className="form-control-plaintext"
               id="firstName"
-              value={user.first_name}
+              value={user?.first_name}
             />
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function AccountSettings({ user }) {
               readOnly
               className="form-control-plaintext"
               id="lastName"
-              value={user.last_name}
+              value={user?.last_name}
             />
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function AccountSettings({ user }) {
               readOnly
               className="form-control-plaintext"
               id="username"
-              value={user.username}
+              value={user?.username}
             />
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function AccountSettings({ user }) {
             type="button"
             className="btn btn-primary btn-sm"
             onClick={() => {
-              navigate(`/account/${user.id}/update-profile`);
+              navigate(`/account/${user?.id}/update-profile`);
             }}
           >
             Update Profile

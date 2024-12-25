@@ -61,7 +61,7 @@ export default function AccountUpdate({ userState }) {
   return (
     <div className="container-fluid mt-3">
       <div className="card border-primary mb-3">
-        <div className="card-header">Update Profile</div>
+        <div className="card-header text-white bg-dark">Update Profile</div>
         <div className="card-body">
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="mb-3 row">

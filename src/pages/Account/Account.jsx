@@ -2,6 +2,7 @@ import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 import { useNavigate, useParams } from "react-router";
 import AccountSettings from "./AccountSettings";
+import ReadingTracker from "../ReadingTracker/ReadingTracker";
 
 export default function Account() {
   const user = useAtomValue(userAtom);
@@ -77,7 +78,7 @@ export default function Account() {
             role="tabpanel"
             aria-labelledby="v-pills-profile-tab"
           >
-            ...
+            <ReadingTracker />
           </div>
           <div
             className="tab-pane fade"
