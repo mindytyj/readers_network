@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import ProfileBookCard from "../../components/ProfileBookCard";
+import { useParams } from "react-router";
+import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
+import TrackerAddButton from "../../components/TrackerAddButton/TrackerAddButton";
 import requestHandler from "../../handlers/request-handler";
 
 export default function CompletedBooks() {
   const { userId } = useParams();
   const [completedBooks, setCompletedBooks] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getCompletedBooks() {
@@ -15,13 +15,15 @@ export default function CompletedBooks() {
           `/api/books/${userId}/completed-books`,
           "GET"
         );
-        setCompletedBooks(books.rows);
+        setCompletedBooks(books);
       } catch {
         console.error("Failed to retrieve profile completed books.");
       }
     }
     getCompletedBooks();
   }, []);
+
+  console.log(completedBooks);
 
   return (
     <div className="mb-4">
@@ -31,21 +33,16 @@ export default function CompletedBooks() {
         </div>
         <div className="col d-flex justify-content-md-end">
           <h5>
-            <i
-              className="bi bi-plus-circle-fill text-primary"
-              onClick={() => {
-                navigate(`/account/${userId}/completed-books/add`);
-              }}
-            ></i>
+            <TrackerAddButton userId={userId} type={"completed"} />
           </h5>
         </div>
       </div>
       <div className="d-flex justify-content-center card-group">
-        {completedBooks == "[]" ? (
+        {completedBooks?.length > 0 ? (
           completedBooks.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} />
+                <ProfileBookCard book={book} type={"completed"} />
               </div>
             );
           })

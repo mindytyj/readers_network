@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { register } from "../../handlers/users-api-requests";
+import { register } from "../../handlers/api-requests";
 import { useSetAtom } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 

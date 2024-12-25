@@ -1,4 +1,4 @@
-import * as usersAPIRequests from "./users-api-requests";
+import * as usersAPIRequests from "./api-requests";
 
 export async function login(userInfo) {
   const jwtToken = await usersAPIRequests.login(userInfo);

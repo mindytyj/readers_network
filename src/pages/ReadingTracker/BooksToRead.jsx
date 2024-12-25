@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import ProfileBookCard from "../../components/ProfileBookCard";
+import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
 import requestHandler from "../../handlers/request-handler";
 
 export default function BooksToRead() {
@@ -34,14 +34,14 @@ export default function BooksToRead() {
             <i
               className="bi bi-plus-circle-fill text-primary"
               onClick={() => {
-                navigate(`/account/${userId}/books-to-read/add`);
+                navigate(`/books`);
               }}
             ></i>
           </h5>
         </div>
       </div>
       <div className="d-flex justify-content-center card-group">
-        {booksToRead == "[]" ? (
+        {booksToRead?.length > 0 ? (
           booksToRead.map((book) => {
             return (
               <div key={book?.id}>

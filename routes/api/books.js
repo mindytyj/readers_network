@@ -5,5 +5,11 @@ const booksCtrl = require("../../controllers/api/books");
 router.get("/:userId/completed-books", booksCtrl.getCompletedBooks);
 router.get("/:userId/books-in-progress", booksCtrl.getBooksInProgress);
 router.get("/:userId/books-to-read", booksCtrl.getBooksToRead);
+router.post("/search", booksCtrl.searchBook);
+router.post("/:userId/completed-books/add/:bookId", booksCtrl.addCompletedBook);
+router.post(
+  "/:userId/books-in-progress/add/:bookId",
+  booksCtrl.addBookInProgress
+);
 
 module.exports = router;

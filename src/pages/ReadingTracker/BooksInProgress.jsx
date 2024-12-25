@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import ProfileBookCard from "../../components/ProfileBookCard";
+import { useParams } from "react-router";
+import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
+import TrackerAddButton from "../../components/TrackerAddButton/TrackerAddButton";
 import requestHandler from "../../handlers/request-handler";
 
 export default function BooksInProgress() {
   const { userId } = useParams();
   const [booksInProgress, setBooksInProgress] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getBooksInProgress() {
@@ -31,17 +31,12 @@ export default function BooksInProgress() {
         </div>
         <div className="col d-flex justify-content-md-end">
           <h5>
-            <i
-              className="bi bi-plus-circle-fill text-primary"
-              onClick={() => {
-                navigate(`/account/${userId}/books-in-progress/add`);
-              }}
-            ></i>
+            <TrackerAddButton userId={userId} type={"in-progress"} />
           </h5>
         </div>
       </div>
       <div className="d-flex justify-content-center card-group">
-        {booksInProgress == "[]" ? (
+        {booksInProgress?.length > 0 ? (
           booksInProgress.map((book) => {
             return (
               <div key={book?.id}>

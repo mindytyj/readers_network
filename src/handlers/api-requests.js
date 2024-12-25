@@ -16,3 +16,7 @@ export function updateProfile(userId, userInfo) {
     userInfo
   );
 }
+
+export function searchBook(bookTitle) {
+  return requestHandler("/api/books/search", "POST", bookTitle);
+}
