@@ -9,6 +9,8 @@ import Auth from "../Auth/Auth";
 import Account from "../Account/Account";
 import AccountUpdate from "../Account/AccountUpdate";
 import AddReadingTracker from "../AddReadingTracker/AddReadingTracker";
+import Books from "../Books/Books";
+import BookInfo from "../BookInfo/BookInfo";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -20,7 +22,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/books" />
+        <Route path="/books" element={<Books />} />
+        <Route path="/books/:bookId" element={<BookInfo />} />
         <Route element={<Auth user={user} />}>
           <Route path="/account/:userId" element={<Account />} />
           <Route
