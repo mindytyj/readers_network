@@ -15,7 +15,7 @@ export default function Registration() {
   }, [user]);
 
   return (
-    <div className="container border border-primary">
+    <div className="container border border-primary rounded mt-4 mb-3">
       <div className="m-3">
         <h2 className="text-center">Register</h2>
       </div>

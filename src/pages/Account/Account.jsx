@@ -14,7 +14,7 @@ export default function Account() {
   }
 
   return (
-    <div className="container-fluid m-3">
+    <div className="container-fluid mt-4 mb-3">
       <div className="d-flex align-items-start">
         <div
           className="nav flex-column nav-pills me-3"

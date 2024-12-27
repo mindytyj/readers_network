@@ -2,7 +2,7 @@ import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { userAtom } from "../../handlers/userAtom";
-import BookSearch from "./BookSearch";
+import BookSearchNav from "./BookSearchNav";
 import BookResult from "./BookResult";
 
 export default function AddReadingTracker() {
@@ -19,14 +19,14 @@ export default function AddReadingTracker() {
   }, [user]);
 
   return (
-    <div className="container-fluid mt-3">
+    <div className="container mt-4 mb-3">
       <div className="card border-primary mb-3">
         <div className="card-header text-white bg-dark">
           Add Book(s) to{" "}
           {type == "completed" ? "Books Completed" : "Books In-Progress"}
         </div>
         <div className="card-body">
-          <BookSearch setBook={setBook} setError={setError} type={type} />
+          <BookSearchNav setBook={setBook} setError={setError} type={type} />
           <ol className="list-group list-group-numbered mb-4">
             {book?.length > 0 ? (
               book.map((bookResult) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { searchBook } from "../../handlers/api-requests";
 
-export default function BookSearch({ setBook, setError, type }) {
+export default function BookSearch({ setBook, setError }) {
   const [search, setSearch] = useState({ bookTitle: "" });
 
   useEffect(() => {
@@ -30,22 +30,18 @@ export default function BookSearch({ setBook, setError, type }) {
   }
 
   return (
-    <nav className="navbar navbar-light bg-light mb-4">
-      <div className="container-fluid">
-        <form className="d-flex justify-content-md-end" onSubmit={handleSubmit}>
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            id="bookTitle"
-            name="bookTitle"
-          />
-          <button className="btn btn-primary btn-sm" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
-    </nav>
+    <form className="d-flex justify-content-md-end" onSubmit={handleSubmit}>
+      <input
+        className="form-control me-2"
+        type="search"
+        placeholder="Search Title"
+        aria-label="Search"
+        id="bookTitle"
+        name="bookTitle"
+      />
+      <button className="btn btn-primary btn-sm" type="submit">
+        Search
+      </button>
+    </form>
   );
 }

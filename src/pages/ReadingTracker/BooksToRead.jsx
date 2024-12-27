@@ -15,7 +15,7 @@ export default function BooksToRead() {
           `/api/books/${userId}/books-to-read`,
           "GET"
         );
-        setBooksToRead(books.rows);
+        setBooksToRead(books);
       } catch {
         console.error("Failed to retrieve profile books to read.");
       }
