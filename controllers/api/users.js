@@ -36,7 +36,7 @@ async function register(req, res) {
     );
 
     const checkUsername = await pool.query(
-      "SELECT username FROM users WHERE username = ($1)",
+      "SELECT username FROM users WHERE lower(username) = ($1)",
       [req.body.username]
     );
     if (checkUsername.rowCount > 0)
@@ -61,26 +61,24 @@ async function register(req, res) {
 
 async function updateProfile(req, res) {
   const userId = req.params.userId;
+
   try {
-    const hashedPW = await bcrypt.hash(
-      req.body.password,
-      parseInt(process.env.SALT_ROUNDS)
-    );
+    if (req.body.password != "") {
+      const hashedPW = await bcrypt.hash(
+        req.body.password,
+        parseInt(process.env.SALT_ROUNDS)
+      );
 
-    await pool.query("UPDATE users SET first_name = ($1) WHERE id = ($2)", [
-      req.body.firstName,
-      userId,
-    ]);
-
-    await pool.query("UPDATE users SET last_name = ($1) WHERE id = ($2)", [
-      req.body.lastName,
-      userId,
-    ]);
-
-    await pool.query("UPDATE users SET password = ($1) WHERE id = ($2)", [
-      req.body.password,
-      userId,
-    ]);
+      await pool.query(
+        "UPDATE users SET first_name = ($1), last_name = ($2), password = ($3) WHERE id = ($4)",
+        [req.body.firstName, req.body.lastName, hashedPW, userId]
+      );
+    } else {
+      await pool.query(
+        "UPDATE users SET first_name = ($1), last_name = ($2) WHERE id = ($3)",
+        [req.body.firstName, req.body.lastName, userId]
+      );
+    }
 
     const user = await pool.query(
       "SELECT id, first_name, last_name, username FROM users WHERE id = ($1)",

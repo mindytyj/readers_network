@@ -41,9 +41,12 @@ export default function AccountUpdate({ userState }) {
 
     try {
       const userData = { ...userInfo };
-      console.log(userData);
-      if (userInfo.password == "") {
-        delete userData.password;
+
+      if (userInfo.password != "") {
+        if (userInfo.password.length < 8 || userInfo.password.length > 20) {
+          setError("Password length must be between 8 to 20 characters long.");
+          return;
+        }
       }
       delete userData.confirmPW;
       const user = await usersTokenHandlers.updateProfile(userId, userData);
@@ -126,8 +129,6 @@ export default function AccountUpdate({ userState }) {
                   id="password"
                   aria-label="password"
                   name="password"
-                  minLength={8}
-                  maxLength={20}
                   value={userInfo.password}
                   onChange={handleChange}
                 />
@@ -147,8 +148,6 @@ export default function AccountUpdate({ userState }) {
                   id="confirmPW"
                   aria-label="confirm password"
                   name="confirmPW"
-                  minLength={8}
-                  maxLength={20}
                   value={userInfo.confirmPW}
                   onChange={handleChange}
                 />

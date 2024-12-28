@@ -28,7 +28,16 @@ export default function RegistrationForm() {
     }
 
     try {
+      const usernameLowerCase = userInfo.username.toLowerCase();
+      userInfo.username = usernameLowerCase;
+
       const userData = { ...userInfo };
+
+      if (userInfo.password.length < 8 || userInfo.password.length > 20) {
+        setError("Password length must be between 8 to 20 characters long.");
+        return;
+      }
+
       delete userData.confirmPW;
       const user = await register(userData);
       setUser(user);
