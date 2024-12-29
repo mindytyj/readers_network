@@ -2,10 +2,12 @@ import { useAtomValue } from "jotai";
 import { bookAtom } from "../../handlers/bookAtom";
 import { userAtom } from "../../handlers/userAtom";
 import requestHandler from "../../handlers/request-handler";
+import { Link, useNavigate } from "react-router";
 
 export default function BooksToReadButton() {
   const user = useAtomValue(userAtom);
   const book = useAtomValue(bookAtom);
+  const navigate = useNavigate();
 
   async function addBookToRead() {
     if (!user) {
@@ -17,22 +19,23 @@ export default function BooksToReadButton() {
         `/api/books/${user?.id}/books-to-read/add/${book?.id}`,
         "POST"
       );
-      alert("Book has been added to your books to read list.");
+
+      navigate(`/account/${user?.id}`);
     } catch (error) {
       console.error(error.message);
-      alert(error.message);
+
+      navigate(`/account/${user?.id}`);
     }
   }
 
   return (
     <div>
-      <p>
-        <i
-          className="bi bi-bookmark-plus-fill text-primary"
-          onClick={addBookToRead}
-        ></i>{" "}
-        Add to Books to Read List
-      </p>
+      <Link className="text-decoration-none text-dark" onClick={addBookToRead}>
+        <p>
+          <i className="bi bi-bookmark-plus-fill text-primary"></i> Add to Books
+          to Read List
+        </p>
+      </Link>
     </div>
   );
 }

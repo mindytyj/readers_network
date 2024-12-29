@@ -7,7 +7,7 @@ export default function SubBookInfo() {
   return (
     <div className="d-flex align-items-center mt-4 mb-3">
       <div className="row">
-        <div className="col mt-4 border-end border-primary">
+        <div className="col mt-4 mb-3 border-end border-primary">
           <div className="flex-shrink-0">
             <div>
               <h5>Book Description</h5>
@@ -17,7 +17,7 @@ export default function SubBookInfo() {
             </div>
           </div>
         </div>
-        <div className="col mt-4">
+        <div className="col mt-4 mb-3">
           <div className="flex-grow-1 ms-5">
             <div>
               <h5>Book Details</h5>

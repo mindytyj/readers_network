@@ -5,6 +5,7 @@ import requestHandler from "../../handlers/request-handler";
 import { bookAtom } from "../../handlers/bookAtom";
 import MainBookInfo from "./MainBookInfo";
 import SubBookInfo from "./SubBookInfo";
+import UserReview from "../BookReviews/UserReview";
 
 export default function BookInfo() {
   const { bookId } = useParams();
@@ -22,6 +23,7 @@ export default function BookInfo() {
     <div className="container mt-4 mb-3">
       <MainBookInfo />
       <SubBookInfo />
+      <UserReview />
     </div>
   );
 }

@@ -11,6 +11,8 @@ import AccountUpdate from "../Account/AccountUpdate";
 import AddReadingTracker from "../AddReadingTracker/AddReadingTracker";
 import Books from "../Books/Books";
 import BookInfo from "../BookInfo/BookInfo";
+import AddUserReview from "../BookReviews/AddUserReview";
+import EditUserReview from "../BookReviews/EditUserReview";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -33,6 +35,11 @@ export default function App() {
           <Route
             path="/account/:userId/reading-tracker/:type/add"
             element={<AddReadingTracker />}
+          />
+          <Route path="/books/:bookId/review/add" element={<AddUserReview />} />
+          <Route
+            path="/books/:bookId/review/edit"
+            element={<EditUserReview />}
           />
         </Route>
       </Routes>
