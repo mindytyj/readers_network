@@ -13,6 +13,8 @@ import Books from "../Books/Books";
 import BookInfo from "../BookInfo/BookInfo";
 import AddUserReview from "../BookReviews/AddUserReview";
 import EditUserReview from "../BookReviews/EditUserReview";
+import SocialFeed from "../SocialFeed/SocialFeed";
+import PostComments from "../PostComments/PostComments";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -41,6 +43,8 @@ export default function App() {
             path="/books/:bookId/review/edit"
             element={<EditUserReview />}
           />
+          <Route path="/social-feed" element={<SocialFeed />} />
+          <Route path="/social-feed/:postId" element={<PostComments />} />
         </Route>
       </Routes>
     </main>

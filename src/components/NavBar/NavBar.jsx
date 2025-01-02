@@ -40,11 +40,15 @@ export default function NavBar() {
                 Books
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
+            {user ? (
+              <li className="nav-item">
+                <a className="nav-link" href="/social-feed">
+                  Social Feed
+                </a>
+              </li>
+            ) : (
+              ""
+            )}
             <li className="nav-item">
               <a
                 className="nav-link disabled"

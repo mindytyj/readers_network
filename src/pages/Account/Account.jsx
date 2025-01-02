@@ -3,6 +3,7 @@ import { userAtom } from "../../handlers/userAtom";
 import { useNavigate, useParams } from "react-router";
 import AccountSettings from "./AccountSettings";
 import ReadingTracker from "../ReadingTracker/ReadingTracker";
+import Friends from "../Friends/Friends";
 
 export default function Account() {
   const user = useAtomValue(userAtom);
@@ -86,7 +87,7 @@ export default function Account() {
             role="tabpanel"
             aria-labelledby="v-pills-friends-tab"
           >
-            ...
+            <Friends />
           </div>
           <div
             className="tab-pane fade"

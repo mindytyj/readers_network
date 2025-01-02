@@ -94,6 +94,42 @@ async function updateProfile(req, res) {
   }
 }
 
+async function getFriends(req, res) {
+  try {
+    const userId = req.params.userId;
+
+    const friends = await pool.query(
+      "SELECT friends.friend_id, users.first_name, users.last_name, users.username FROM friends LEFT JOIN users ON friends.friend_id = users.id WHERE user_id = ($1)",
+      [userId]
+    );
+
+    res.status(200).json(friends.rows);
+  } catch {
+    res.status(400).json("Unable to retrieve user's friends.");
+  }
+}
+
+async function removeFriend(req, res) {
+  try {
+    const userId = req.params.userId;
+    const friendId = req.params.friendId;
+
+    await pool.query(
+      "DELETE FROM friends WHERE user_id = ($1) AND friend_id = ($2)",
+      [userId, friendId]
+    );
+
+    await pool.query(
+      "DELETE FROM friends WHERE user_id = ($1) AND friend_id = ($2)",
+      [friendId, userId]
+    );
+
+    res.status(200).json("Successfully deleted friend from friend list.");
+  } catch {
+    res.status(400).json("Unable to delete friend from friend list.");
+  }
+}
+
 function createJWTToken(user) {
   return jwt.sign({ user }, process.env.SECRET, { expiresIn: "1h" });
 }
@@ -102,4 +138,6 @@ module.exports = {
   login,
   register,
   updateProfile,
+  getFriends,
+  removeFriend,
 };
