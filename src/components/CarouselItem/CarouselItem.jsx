@@ -5,7 +5,6 @@ export default function CarouselItem() {
     <div className="carousel-item active">
       <div className="d-flex">
         <BookDiscoveryCardGroup />
-        <BookDiscoveryCardGroup />
       </div>
     </div>
   );

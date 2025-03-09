@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import AccountSettings from "./AccountSettings";
 import ReadingTracker from "../ReadingTracker/ReadingTracker";
 import Friends from "../Friends/Friends";
+import Messages from "../Messages/Messages";
 
 export default function Account() {
   const user = useAtomValue(userAtom);
@@ -95,7 +96,7 @@ export default function Account() {
             role="tabpanel"
             aria-labelledby="v-pills-messages-tab"
           >
-            ...
+            <Messages />
           </div>
           <div
             className="tab-pane fade"

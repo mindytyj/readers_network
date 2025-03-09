@@ -16,7 +16,7 @@ export default function EditUserReview() {
         `/api/reviews/${bookId}/${user?.id}`,
         "GET"
       );
-      setUserReview(review);
+      setUserReview(review[0]);
     }
     getUserReview();
   }, []);

@@ -64,8 +64,8 @@ export default function EditUserReviewForm({ userReview, setUserReview }) {
             id="review"
             aria-label="review"
             placeholder="What do you think about the book?"
-            name="review"
             value={userReview.review}
+            name="review"
             rows="4"
             onChange={handleChange}
           />

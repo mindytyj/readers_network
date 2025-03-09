@@ -1,6 +1,11 @@
 import RemoveFriendButton from "./RemoveFriendButton";
 
-export default function FriendListItem({ friend, friendList, setFriendList }) {
+export default function FriendListItem({
+  friend,
+  friendList,
+  setFriendList,
+  setFriendUpdate,
+}) {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
       <div className="ms-2 me-auto">
@@ -13,6 +18,7 @@ export default function FriendListItem({ friend, friendList, setFriendList }) {
         friendId={friend.friend_id}
         friendList={friendList}
         setFriendList={setFriendList}
+        setFriendUpdate={setFriendUpdate}
       />
     </li>
   );

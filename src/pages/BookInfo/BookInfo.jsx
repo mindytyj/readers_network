@@ -6,6 +6,7 @@ import { bookAtom } from "../../handlers/bookAtom";
 import MainBookInfo from "./MainBookInfo";
 import SubBookInfo from "./SubBookInfo";
 import UserReview from "../BookReviews/UserReview";
+import CommunityReviews from "./CommunityReviews";
 
 export default function BookInfo() {
   const { bookId } = useParams();
@@ -24,6 +25,7 @@ export default function BookInfo() {
       <MainBookInfo />
       <SubBookInfo />
       <UserReview />
+      <CommunityReviews />
     </div>
   );
 }

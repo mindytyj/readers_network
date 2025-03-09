@@ -2,8 +2,9 @@ import { useAtomValue } from "jotai";
 import { Link } from "react-router";
 import { bookAtom } from "../../handlers/bookAtom";
 import { userAtom } from "../../handlers/userAtom";
+import DeleteUserReview from "./DeleteUserReview";
 
-export default function EditUserReviewButton({ userReview }) {
+export default function EditUserReviewButton({ userReview, setReviewUpdate }) {
   const book = useAtomValue(bookAtom);
   const user = useAtomValue(userAtom);
 
@@ -20,8 +21,11 @@ export default function EditUserReviewButton({ userReview }) {
           to={`/books/${book.id}/review/edit`}
           className="text-decoration-none text-dark"
         >
-          <i className="bi bi-pen-fill text-primary"></i> Edit Review and Rating
+          <i className="bi bi-pen-fill text-primary"></i> Edit
         </Link>
+      </div>
+      <div className="mb-3">
+        <DeleteUserReview bookId={book.id} setReviewUpdate={setReviewUpdate} />
       </div>
     </div>
   ) : (

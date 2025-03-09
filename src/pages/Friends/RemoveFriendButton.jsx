@@ -6,16 +6,21 @@ export default function RemoveFriendButton({
   friendId,
   friendList,
   setFriendList,
+  setFriendUpdate,
 }) {
   const user = useAtomValue(userAtom);
 
   async function removeFriend() {
     try {
+      setFriendUpdate(false);
+
       await requestHandler(
         `/api/users/${user?.id}/friends/remove/${friendId}`,
         "DELETE"
       );
       setFriendList(friendList.filter((friends) => friends?.id !== friendId));
+
+      setFriendUpdate(true);
     } catch (error) {
       console.error("Failed to remove friend.");
     }

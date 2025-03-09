@@ -10,6 +10,9 @@ export default function UserReview() {
   const { bookId } = useParams();
   const user = useAtomValue(userAtom);
   const [userReview, setUserReview] = useState([]);
+  const [reviewUpdate, setReviewUpdate] = useState(false);
+
+  console.log(reviewUpdate);
 
   useEffect(() => {
     async function getUserReview() {
@@ -18,13 +21,14 @@ export default function UserReview() {
           `/api/reviews/${bookId}/${user?.id}`,
           "GET"
         );
+        console.log(review);
         setUserReview(review);
       } catch (error) {
-        console.error(error.message);
+        console.error("Unable to get user review.");
       }
     }
     getUserReview();
-  }, []);
+  }, [reviewUpdate]);
 
   return (
     <div className="container mt-4 mb-3">
@@ -36,7 +40,10 @@ export default function UserReview() {
       <div className="row text-center mt-2 mb-3">
         <div className="flex-shrink-0">
           {user && userReview != "" ? (
-            <EditUserReviewButton userReview={userReview} />
+            <EditUserReviewButton
+              userReview={userReview[0]}
+              setReviewUpdate={setReviewUpdate}
+            />
           ) : (
             <AddUserReviewButton />
           )}

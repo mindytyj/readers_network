@@ -7,6 +7,7 @@ import FriendListItem from "./FriendListItem";
 export default function Friends() {
   const user = useAtomValue(userAtom);
   const [friendList, setFriendList] = useState([]);
+  const [friendUpdate, setFriendUpdate] = useState(false);
 
   useEffect(() => {
     async function getFriends() {
@@ -22,7 +23,7 @@ export default function Friends() {
       }
     }
     getFriends();
-  }, [friendList]);
+  }, [friendUpdate]);
 
   return (
     <div className="card border-primary mb-3">
@@ -37,6 +38,7 @@ export default function Friends() {
                     friend={friend}
                     friendList={friendList}
                     setFriendList={setFriendList}
+                    setFriendUpdate={setFriendUpdate}
                   />
                 </div>
               );
