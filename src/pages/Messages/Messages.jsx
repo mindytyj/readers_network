@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
@@ -6,6 +7,7 @@ import MessageListItem from "./MessageListItem";
 
 export default function Messages() {
   const user = useAtomValue(userAtom);
+  const socket = io.connect("http://localhost:3001");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {

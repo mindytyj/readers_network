@@ -1,15 +1,25 @@
 const express = require("express");
 const path = require("path");
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
+const cors = require("cors");
 
 require("dotenv").config();
 
 require("./config/database");
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 // let io = require("socket.io");
 // app.set("io", io);
 
 app.use(express.json());
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "build")));
 
@@ -26,6 +36,24 @@ app.get("/*", (req, res) => {
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, function () {
+io.on("connection", (socket) => {
+  console.log(`Socket ID [${socket.id}] A user has connected to the server.`);
+
+  socket.on("joinConvo", (message) => {
+    socket.join(message);
+  });
+
+  socket.on("sendMessage", (message) => {
+    socket.to(message.convoID).emit("receiveMessage", message);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(
+      `Socket ID [${socket.id}] A user has disconnected from the server.`
+    );
+  });
+});
+
+server.listen(port, function () {
   console.log(`Express app running on port ${port}`);
 });
