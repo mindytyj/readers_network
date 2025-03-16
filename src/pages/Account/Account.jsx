@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import AccountSettings from "./AccountSettings";
 import ReadingTracker from "../ReadingTracker/ReadingTracker";
 import Friends from "../Friends/Friends";
-import Messages from "../Messages/Messages";
+import Chats from "../Chats/Chats";
 
 export default function Account() {
   const user = useAtomValue(userAtom);
@@ -50,15 +50,15 @@ export default function Account() {
           </button>
           <button
             className="nav-link"
-            id="v-pills-messages-tab"
+            id="v-pills-chats-tab"
             data-bs-toggle="pill"
-            data-bs-target="#v-pills-messages"
+            data-bs-target="#v-pills-chats"
             type="button"
             role="tab"
-            aria-controls="v-pills-messages"
+            aria-controls="v-pills-chats"
             aria-selected="false"
           >
-            Messages
+            Chats
           </button>
           <button
             className="nav-link"
@@ -92,11 +92,11 @@ export default function Account() {
           </div>
           <div
             className="tab-pane fade"
-            id="v-pills-messages"
+            id="v-pills-chats"
             role="tabpanel"
-            aria-labelledby="v-pills-messages-tab"
+            aria-labelledby="v-pills-chats-tab"
           >
-            <Messages />
+            <Chats />
           </div>
           <div
             className="tab-pane fade"

@@ -16,6 +16,7 @@ import EditUserReview from "../BookReviews/EditUserReview";
 import SocialFeed from "../SocialFeed/SocialFeed";
 import PostComments from "../PostComments/PostComments";
 import ReviewComments from "../ReviewComments/ReviewComments";
+import Chat from "../Chat/Chat";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -39,6 +40,7 @@ export default function App() {
             path="/account/:userId/reading-tracker/:type/add"
             element={<AddReadingTracker />}
           />
+          <Route path="/account/:userId/chat/:friendId" element={<Chat />} />
           <Route path="/books/:bookId/review/add" element={<AddUserReview />} />
           <Route
             path="/books/:bookId/review/edit"

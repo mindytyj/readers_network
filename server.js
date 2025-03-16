@@ -15,8 +15,6 @@ const io = new Server(server, {
     origin: "http://localhost:3000",
   },
 });
-// let io = require("socket.io");
-// app.set("io", io);
 
 app.use(express.json());
 app.use(cors());
@@ -28,7 +26,7 @@ app.use("/api/books", require("./routes/api/books"));
 app.use("/api/reviews", require("./routes/api/reviews"));
 app.use("/api/feed", require("./routes/api/feed"));
 app.use("/api/community", require("./routes/api/community"));
-app.use("/api/messages", require("./routes/api/messages"));
+app.use("/api/chats", require("./routes/api/chats"));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
@@ -39,12 +37,12 @@ const port = process.env.PORT || 3001;
 io.on("connection", (socket) => {
   console.log(`Socket ID [${socket.id}] A user has connected to the server.`);
 
-  socket.on("joinConvo", (message) => {
+  socket.on("joinChat", (message) => {
     socket.join(message);
   });
 
   socket.on("sendMessage", (message) => {
-    socket.to(message.convoID).emit("receiveMessage", message);
+    socket.to(message.chatID).emit("receiveMessage", message.message);
   });
 
   socket.on("disconnect", () => {
