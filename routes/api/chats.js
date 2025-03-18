@@ -4,6 +4,7 @@ const chatsCtrl = require("../../controllers/api/chats");
 
 router.get("/:userId", chatsCtrl.getChats);
 router.get("/chatID/:userId/:friendId", chatsCtrl.getChatID);
+router.get("/recipient/:chatId", chatsCtrl.getRecipientInfo);
 router.get("/messages/:chatId", chatsCtrl.getPreviousMessages);
 router.post("/add/:chatId/:userId/:friendId", chatsCtrl.addNewMessage);
 

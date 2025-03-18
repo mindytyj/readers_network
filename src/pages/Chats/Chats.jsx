@@ -47,21 +47,21 @@ export default function Chats() {
             chats.map((chat) => {
               return (
                 <div key={chat?.id}>
-                  <ChatsListItem />
+                  <ChatsListItem chat={chat} userId={user?.id} />
                 </div>
               );
             })
           ) : (
             <div className="d-flex justify-content-center mt-2">
               <h6 className="">No chats available.</h6>
-              <AddChatModal
-                user={user}
-                chatModal={chatModal}
-                setChatModal={setChatModal}
-              />
             </div>
           )}
         </ol>
+        <AddChatModal
+          user={user}
+          chatModal={chatModal}
+          setChatModal={setChatModal}
+        />
       </div>
     </div>
   );

@@ -1,17 +1,17 @@
-import { io } from "socket.io-client";
+import { socket } from "../../socket";
 import { useNavigate, useParams } from "react-router";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 import { useEffect, useState } from "react";
 import ChatMessageItem from "./ChatMessageItem";
 import requestHandler from "../../handlers/request-handler";
-
-const socket = io.connect("http://localhost:3001");
+import ChatHeader from "./ChatHeader";
 
 export default function Chat() {
   const user = useAtomValue(userAtom);
   const { userId, friendId } = useParams();
   const [chatID, setChatID] = useState("");
+  const [recipient, setRecipient] = useState([]);
   const [sentMessage, setSentMessage] = useState("");
   const [newMessage, setNewMessage] = useState({
     messageInput: "",
@@ -34,6 +34,13 @@ export default function Chat() {
 
         setChatID(chatId.id);
 
+        const recipientInfo = await requestHandler(
+          `/api/chats/recipient/${chatId.id}`,
+          "GET"
+        );
+
+        setRecipient(recipientInfo);
+
         const previousMessages = await requestHandler(
           `/api/chats/messages/${chatId.id}`,
           "GET"
@@ -41,19 +48,29 @@ export default function Chat() {
 
         setChatMessages(previousMessages);
       } catch (err) {
-        console.log("Failed to retrieve previous messages.");
+        console.log("Failed to retrieve chat details and messages.");
       }
     }
+
     getChatIDAndPreviousMessages();
   }, []);
 
-  const joinChat = () => {
-    if (chatID !== "") {
+  useEffect(() => {
+    if (chatID) {
       socket.emit("joinChat", chatID);
+      console.log(`Joined room: ${chatID}`);
     }
-  };
+  }, [chatID]);
 
-  joinChat();
+  useEffect(() => {
+    socket.on("sendMessage", (message) => {
+      setChatMessages((chatMessages) => [...chatMessages, message]);
+    });
+
+    return () => {
+      socket.off("sendMessage");
+    };
+  }, []);
 
   const sendMessage = () => {
     setNewMessage({ messageInput: sentMessage });
@@ -73,21 +90,15 @@ export default function Chat() {
             }
           );
 
+          let date = new Date().toISOString();
+
           socket.emit("sendMessage", {
             chatID: chatID,
+            id: chatMessages.length + 1,
+            sent_recipient: user?.id,
             message: newMessage.messageInput,
+            sent_date: date,
           });
-
-          let date = new Date().toJSON();
-
-          setChatMessages([
-            ...chatMessages,
-            {
-              sent_recipient: user?.id,
-              message: newMessage.messageInput,
-              sent_date: date,
-            },
-          ]);
         } catch (err) {
           console.error("Unable to add message.");
         }
@@ -101,7 +112,7 @@ export default function Chat() {
   function handleChange(evt) {
     setSentMessage(evt.target.value);
 
-    if (evt.target.value != "") {
+    if (evt.target.value !== "") {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -110,17 +121,25 @@ export default function Chat() {
 
   return (
     <div className="container g-0 mt-4 mb-3 border border-primary border-opacity-50 rounded-bottom-1">
-      <div className="list-group text-white bg-primary bg-opacity-75 mb-3 rounded-0">
-        <div className="mt-4 mb-4 mx-3">
-          <h4>Chat</h4>
-        </div>
-      </div>
-      <div className="list-group">
+      <ChatHeader recipient={recipient} />
+      <div className="container">
         {chatMessages?.length > 0 ? (
           chatMessages.map((message) => {
             return (
-              <div key={message?.id}>
-                <ChatMessageItem user={user} message={message} />
+              <div
+                className={
+                  "d-flex " +
+                  (message.sent_recipient === user?.id
+                    ? "justify-content-end"
+                    : "justify-content-start")
+                }
+                key={message?.id}
+              >
+                <ChatMessageItem
+                  userId={user?.id}
+                  recipient={recipient}
+                  message={message}
+                />
               </div>
             );
           })

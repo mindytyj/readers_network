@@ -1,19 +1,17 @@
-export default function ChatMessageItem({ user, message }) {
+export default function ChatMessageItem({ userId, message }) {
   return (
-    <li
+    <div
       className={
-        "list-group-item d-flex justify-content-between align-items-start w-50 p-3 mt-2 mb-2 mx-3 rounded " +
-        (message.sent_recipient == user.id
+        "d-flex justify-content-between align-items-start w-25 p-3 mt-3 mb-3 mx-3 rounded " +
+        (message.sent_recipient === userId
           ? "bg-primary bg-opacity-25"
           : "bg-secondary bg-opacity-25")
       }
     >
       <div className="ms-2 me-auto">
-        <div className="fw-bold">
-          {user.first_name} {user.last_name}
-        </div>
         <span className="text-break">{message.message}</span>
       </div>
-    </li>
+      <small className="">{message.sent_date}</small>
+    </div>
   );
 }

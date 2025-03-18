@@ -3,7 +3,7 @@ const { pool } = require("../../config/database");
 async function getChats(req, res) {
   try {
     const chats = await pool.query(
-      "SELECT id, u.first_name, u.last_name, u.username FROM chats c LEFT JOIN users u ON c.user_id = u.id"
+      "SELECT c.id, u.id AS friend_id, u.first_name, u.last_name, u.username, m.message, m.sent_date FROM chats c LEFT JOIN users u ON c.friend_id = u.id LEFT JOIN messages m ON c.id = m.chat_id ORDER BY m.sent_date DESC LIMIT 1"
     );
 
     if (!chats) throw new Error("There are no chats available.");
@@ -46,7 +46,7 @@ async function getPreviousMessages(req, res) {
 
   try {
     const messages = await pool.query(
-      "SELECT sent_recipient, message, sent_date FROM messages WHERE chat_id = ($1) ORDER BY sent_date desc",
+      "SELECT id, sent_recipient, message, sent_date FROM messages WHERE chat_id = ($1) ORDER BY sent_date",
       [chatId]
     );
 
@@ -55,6 +55,23 @@ async function getPreviousMessages(req, res) {
     res.status(200).json(messages.rows);
   } catch {
     res.status(400).json("Unable to retrieve messages.");
+  }
+}
+
+async function getRecipientInfo(req, res) {
+  const chatId = req.params.chatId;
+
+  try {
+    const recipient = await pool.query(
+      "SELECT m.sent_recipient, u.first_name, u.last_name FROM messages m LEFT JOIN users u ON m.receive_recipient = u.id WHERE m.chat_id = ($1) LIMIT 1",
+      [chatId]
+    );
+
+    if (!recipient) throw new Error("There is no recipient available.");
+
+    res.status(200).json(recipient.rows[0]);
+  } catch {
+    res.status(400).json("Unable to retrieve recipient.");
   }
 }
 
@@ -85,6 +102,7 @@ async function addNewMessage(req, res) {
 module.exports = {
   getChats,
   getChatID,
+  getRecipientInfo,
   getPreviousMessages,
   addNewMessage,
 };

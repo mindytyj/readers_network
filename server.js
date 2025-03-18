@@ -42,7 +42,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", (message) => {
-    socket.to(message.chatID).emit("receiveMessage", message.message);
+    const data = {
+      id: message.id,
+      sent_recipient: message.sent_recipient,
+      message: message.message,
+      sent_date: message.sent_date,
+    };
+
+    io.to(message.chatID).emit("sendMessage", data);
   });
 
   socket.on("disconnect", () => {
