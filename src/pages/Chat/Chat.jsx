@@ -2,10 +2,11 @@ import { socket } from "../../socket";
 import { useNavigate, useParams } from "react-router";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatMessageItem from "./ChatMessageItem";
 import requestHandler from "../../handlers/request-handler";
 import ChatHeader from "./ChatHeader";
+import ScrollToLatestMessage from "./ScrollToLatestMessage";
 
 export default function Chat() {
   const user = useAtomValue(userAtom);
@@ -35,7 +36,7 @@ export default function Chat() {
         setChatID(chatId.id);
 
         const recipientInfo = await requestHandler(
-          `/api/chats/recipient/${chatId.id}`,
+          `/api/chats/recipient/${chatId.id}/${user?.id}`,
           "GET"
         );
 
@@ -47,6 +48,10 @@ export default function Chat() {
         );
 
         setChatMessages(previousMessages);
+
+        const messagesContainer = document.getElementById("messagesContainer");
+
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
       } catch (err) {
         console.log("Failed to retrieve chat details and messages.");
       }
@@ -58,7 +63,6 @@ export default function Chat() {
   useEffect(() => {
     if (chatID) {
       socket.emit("joinChat", chatID);
-      console.log(`Joined room: ${chatID}`);
     }
   }, [chatID]);
 
@@ -72,10 +76,10 @@ export default function Chat() {
     };
   }, []);
 
-  const sendMessage = () => {
+  function sendMessage() {
     setNewMessage({ messageInput: sentMessage });
     setSentMessage("");
-  };
+  }
 
   useEffect(() => {
     if (newMessage.messageInput) {
@@ -123,53 +127,57 @@ export default function Chat() {
     <div className="container g-0 mt-4 mb-3 border border-primary border-opacity-50 rounded-bottom-1">
       <ChatHeader recipient={recipient} />
       <div className="container">
-        {chatMessages?.length > 0 ? (
-          chatMessages.map((message) => {
-            return (
-              <div
-                className={
-                  "d-flex " +
-                  (message.sent_recipient === user?.id
-                    ? "justify-content-end"
-                    : "justify-content-start")
-                }
-                key={message?.id}
-              >
-                <ChatMessageItem
-                  userId={user?.id}
-                  recipient={recipient}
-                  message={message}
-                />
-              </div>
-            );
-          })
-        ) : (
-          <div className="d-flex justify-content-center mt-2 mb-3">
-            <h6 className="">No messages available.</h6>
+        <div
+          id="messagesContainer"
+          className="overflow-y-auto messagesContainer"
+        >
+          {chatMessages?.length > 0 ? (
+            chatMessages.map((message) => {
+              return (
+                <div
+                  className={
+                    "d-flex " +
+                    (message.sent_recipient === user?.id
+                      ? "justify-content-end"
+                      : "justify-content-start")
+                  }
+                  key={message?.id}
+                >
+                  <ChatMessageItem
+                    userId={user?.id}
+                    recipient={recipient}
+                    message={message}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <div className="d-flex justify-content-center mt-2 mb-3">
+              <h6 className="">No messages available.</h6>
+            </div>
+          )}
+          <ScrollToLatestMessage />
+        </div>
+        <div className="mt-3 mb-3 mx-3 row d-flex justify-content-center">
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              type="text"
+              id="messageInput"
+              name="messageInput"
+              placeholder="Message"
+              value={sentMessage}
+              onChange={handleChange}
+            ></input>
           </div>
-        )}
-        <div>
-          <div className="mt-3 mb-3 mx-3 row d-flex justify-content-center">
-            <div className="col-sm-10">
-              <input
-                className="form-control"
-                type="text"
-                id="messageInput"
-                name="messageInput"
-                placeholder="Message"
-                value={sentMessage}
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="col-auto">
-              <button
-                className="btn btn-primary btn-sm"
-                disabled={disabled}
-                onClick={sendMessage}
-              >
-                <i className="bi bi-send-fill"></i>
-              </button>
-            </div>
+          <div className="col-auto">
+            <button
+              className="btn btn-primary btn-sm"
+              disabled={disabled}
+              onClick={sendMessage}
+            >
+              <i className="bi bi-send-fill"></i>
+            </button>
           </div>
         </div>
       </div>

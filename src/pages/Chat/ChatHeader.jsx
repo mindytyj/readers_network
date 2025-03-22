@@ -5,6 +5,7 @@ export default function ChatHeader({ recipient }) {
         <h4>
           {recipient.first_name} {recipient.last_name}
         </h4>
+        <small>{recipient.username}</small>
       </div>
     </div>
   );

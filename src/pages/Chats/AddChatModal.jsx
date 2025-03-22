@@ -49,7 +49,7 @@ export default function AddChatModal({ user, chatModal, setChatModal }) {
               {friendList?.length >= 0 ? (
                 friendList.map((friend) => {
                   return (
-                    <div key={friend?.id}>
+                    <div key={friend?.friend_id}>
                       <MessageFriendListItem user={user} friend={friend} />
                     </div>
                   );

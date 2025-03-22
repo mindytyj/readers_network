@@ -30,23 +30,31 @@ export default function Books() {
           <BookSearch setBook={setBook} setError={setError} />
         </div>
       </div>
-      <div className="row row-cols-1 row-cols-md-4 g-4">
-        {book?.bookTitle == ""
-          ? books.map((books) => {
-              return (
-                <div key={books?.id}>
-                  <BookCard bookResult={books} setError={setError} />
-                </div>
-              );
-            })
-          : book.map((book) => {
-              return (
-                <div key={book?.id}>
-                  <BookCard bookResult={book} setError={setError} />
-                </div>
-              );
-            })}
-      </div>
+      {book?.bookTitle === "" ? (
+        books.map((books) => {
+          return (
+            <div className="row row-cols-1 row-cols-md-4 g-4">
+              <div key={books?.id}>
+                <BookCard bookResult={books} setError={setError} />
+              </div>
+            </div>
+          );
+        })
+      ) : book.length > 0 ? (
+        book.map((book) => {
+          return (
+            <div className="row row-cols-1 row-cols-md-4 g-4">
+              <div key={book?.id}>
+                <BookCard bookResult={book} setError={setError} />
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <div className="d-flex justify-content-center">
+          <h5 className="text-center">No books found.</h5>
+        </div>
+      )}
     </div>
   );
 }

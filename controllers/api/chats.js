@@ -1,9 +1,12 @@
 const { pool } = require("../../config/database");
 
 async function getChats(req, res) {
+  const userId = req.params.userId;
+
   try {
     const chats = await pool.query(
-      "SELECT c.id, u.id AS friend_id, u.first_name, u.last_name, u.username, m.message, m.sent_date FROM chats c LEFT JOIN users u ON c.friend_id = u.id LEFT JOIN messages m ON c.id = m.chat_id ORDER BY m.sent_date DESC LIMIT 1"
+      "SELECT c.id, (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) AS friendId, u.first_name, u.last_name, u.username, m.message, m.sent_date FROM chats c LEFT JOIN users u ON u.id = (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) LEFT JOIN messages m ON c.id = m.chat_id WHERE c.user_id = ($1) OR c.friend_id = ($1) ORDER BY m.sent_date DESC LIMIT 1",
+      [userId]
     );
 
     if (!chats) throw new Error("There are no chats available.");
@@ -60,11 +63,12 @@ async function getPreviousMessages(req, res) {
 
 async function getRecipientInfo(req, res) {
   const chatId = req.params.chatId;
+  const userId = req.params.userId;
 
   try {
     const recipient = await pool.query(
-      "SELECT m.sent_recipient, u.first_name, u.last_name FROM messages m LEFT JOIN users u ON m.receive_recipient = u.id WHERE m.chat_id = ($1) LIMIT 1",
-      [chatId]
+      "SELECT (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) AS friendId, u.first_name, u.last_name, u.username FROM chats c LEFT JOIN users u ON u.id = (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) WHERE c.id = ($2)",
+      [userId, chatId]
     );
 
     if (!recipient) throw new Error("There is no recipient available.");
