@@ -3,7 +3,7 @@ import { useState } from "react";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
 
-export default function AddReviewComment({ reviewId, setCommentUpdate }) {
+export default function AddTopicPostComment({ postId, setCommentUpdate }) {
   const [comment, setComment] = useState({
     comment: "",
   });
@@ -28,13 +28,14 @@ export default function AddReviewComment({ reviewId, setCommentUpdate }) {
 
       const commentData = { ...comment };
       await requestHandler(
-        `/api/community/${user?.id}/comments/add/${reviewId}`,
+        `/api/discussions/${user?.id}/comments/add/${postId}`,
         "POST",
         {
           commentData,
         }
       );
 
+      setComment({ comment: "" });
       setCommentUpdate(true);
     } catch (err) {
       console.error("Unable to add comment.");
@@ -52,6 +53,7 @@ export default function AddReviewComment({ reviewId, setCommentUpdate }) {
           placeholder="Add Comment"
           name="comment"
           onChange={handleChange}
+          value={comment.comment}
         ></input>
       </div>
       <div className="input-group mb-3 justify-content-md-end">

@@ -13,18 +13,16 @@ export default function ReviewLikeButton({ review, setLikeUpdate }) {
     async function getLike() {
       try {
         const userLike = await requestHandler(
-          `/api/reviews/${user?.id}/like/${review.id}`,
+          `/api/community/${user?.id}/likes/${review.id}`,
           "GET"
         );
         setLike(userLike);
       } catch (error) {
-        console.error("Unable to get user like.");
+        console.error("Unable to get review likes.");
       }
     }
     getLike();
   }, []);
-
-  console.log(review.id);
 
   return (
     <div className="col-md-1">
@@ -42,7 +40,7 @@ export default function ReviewLikeButton({ review, setLikeUpdate }) {
           setLikeUpdate={setLikeUpdate}
         />
       )}{" "}
-      {review.likes} likes
+      {review.likes} {review.likes > 1 ? "likes" : "like"}
     </div>
   );
 }

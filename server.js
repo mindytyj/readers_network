@@ -27,6 +27,8 @@ app.use("/api/reviews", require("./routes/api/reviews"));
 app.use("/api/feed", require("./routes/api/feed"));
 app.use("/api/community", require("./routes/api/community"));
 app.use("/api/chats", require("./routes/api/chats"));
+app.use("/api/groups", require("./routes/api/groups"));
+app.use("/api/discussions", require("./routes/api/discussions"));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));

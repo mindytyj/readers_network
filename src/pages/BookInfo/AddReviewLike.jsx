@@ -9,7 +9,7 @@ export default function AddLike({ reviewId, setLike, setLikeUpdate }) {
     try {
       setLikeUpdate(false);
       await requestHandler(
-        `/api/reviews/${user?.id}/like/add/${reviewId}`,
+        `/api/community/${user?.id}/likes/add/${reviewId}`,
         "POST"
       );
 

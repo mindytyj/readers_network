@@ -14,7 +14,7 @@ export default function RemoveReviewLike({
     try {
       setLikeUpdate(false);
       await requestHandler(
-        `/api/reviews/${user?.id}/like/remove/${reviewId}`,
+        `/api/community/${user?.id}/likes/remove/${reviewId}`,
         "DELETE"
       );
 

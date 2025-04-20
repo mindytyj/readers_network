@@ -9,23 +9,31 @@ export default function EditUserReviewButton({ userReview, setReviewUpdate }) {
   const user = useAtomValue(userAtom);
 
   return userReview ? (
-    <div className="list-group border border-primary">
-      <div className="d-flex w-100 justify-content-center">
-        <h5 className="mt-3 mb-2">{user?.first_name}'s Review and Rating</h5>
+    <div className="list-group-item list-group-item-action border-primary">
+      <div className="d-flex w-100 justify-content-between">
+        <h5 className="mb-2">
+          {user?.first_name} {user?.last_name}
+        </h5>
+        <small>{userReview.created_date}</small>
       </div>
-      <small className="mb-3">Added on: {userReview.created_date}</small>
-      <h6 className="mb-2">Rating Given: {userReview?.rating} Star(s)</h6>
-      <h6 className="mb-3">Review Given: {userReview?.review}</h6>
-      <div className="mb-3">
-        <Link
-          to={`/books/${book.id}/review/edit`}
-          className="text-decoration-none text-dark"
-        >
-          <i className="bi bi-pen-fill text-primary"></i> Edit
-        </Link>
-      </div>
-      <div className="mb-3">
-        <DeleteUserReview bookId={book.id} setReviewUpdate={setReviewUpdate} />
+      <p className="mb-2">Rated: {userReview?.rating} star(s)</p>
+      <p className="mb-2">{userReview?.review}</p>
+      <div className="row">
+        <div className="col-md-1">
+          {" "}
+          <Link
+            to={`/books/${book.id}/review/edit`}
+            className="text-decoration-none text-dark"
+          >
+            <i className="bi bi-pen-fill text-primary"></i> Edit
+          </Link>
+        </div>
+        <div className="col-md-1">
+          <DeleteUserReview
+            bookId={book.id}
+            setReviewUpdate={setReviewUpdate}
+          />
+        </div>
       </div>
     </div>
   ) : (

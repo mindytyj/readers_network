@@ -13,5 +13,23 @@ code {
 } */
 
 .messagesContainer {
+  height: 500px;
   max-height: 500px;
+}
+
+.groupsContainer {
+  height: 600px;
+  max-height: 600px;
+}
+
+.discussionsContainer {
+  max-height: 500px;
+}
+
+.allDiscussionPostsContainer {
+  max-height: 700px;
+}
+
+textarea {
+  resize: none;
 }

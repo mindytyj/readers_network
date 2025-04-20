@@ -17,6 +17,10 @@ import SocialFeed from "../SocialFeed/SocialFeed";
 import PostComments from "../PostComments/PostComments";
 import ReviewComments from "../ReviewComments/ReviewComments";
 import Chat from "../Chat/Chat";
+import Groups from "../Groups/Groups";
+import GroupInfo from "../GroupInfo/GroupInfo";
+import DiscussionPostComments from "../DiscussionPostComments/DiscussionPostComments";
+import GroupTopicPosts from "../GroupTopicPosts/GroupTopicPosts";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -30,6 +34,16 @@ export default function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/books" element={<Books />} />
         <Route path="/books/:bookId" element={<BookInfo />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/groups/:groupId" element={<GroupInfo />} />
+        <Route
+          path="/groups/:groupId/topics/:topicId"
+          element={<GroupTopicPosts />}
+        />
+        <Route
+          path="/groups/:groupId/topic/:topicId/:postId"
+          element={<DiscussionPostComments />}
+        />
         <Route element={<Auth user={user} />}>
           <Route path="/account/:userId" element={<Account />} />
           <Route

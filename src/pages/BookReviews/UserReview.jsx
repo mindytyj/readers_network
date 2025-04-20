@@ -37,19 +37,24 @@ export default function UserReview() {
           <h5>Rating and Review</h5>
         </div>
       </div>
-      <div className="row text-center mt-2 mb-3">
-        <div className="flex-shrink-0">
-          {user && userReview != "" ? (
-            <EditUserReviewButton
-              userReview={userReview[0]}
-              setReviewUpdate={setReviewUpdate}
-            />
-          ) : (
-            <AddUserReviewButton />
-          )}
+      {user && userReview != "" ? (
+        <div className="row mt-2 mb-3">
+          <div className="flex-shrink-0">
+            <div className="list-group">
+              <EditUserReviewButton
+                userReview={userReview[0]}
+                setReviewUpdate={setReviewUpdate}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="col mt-4"></div>
+      ) : (
+        <div className="row text-center mt-2 mb-3">
+          <div className="flex-shrink-0">
+            <AddUserReviewButton />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

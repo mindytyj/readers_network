@@ -32,7 +32,7 @@ export default function SocialFeed() {
       <div className="mb-4">
         <AddPost setPostUpdate={setPostUpdate} />
       </div>
-      <div className="list-group">
+      <div className="list-group overflow-y-auto messagesContainer rounded-0">
         {feedPosts?.length > 0 ? (
           feedPosts.map((post) => {
             return (

@@ -16,7 +16,7 @@ export default function BookDiscoveryCard({ recommendations }) {
               by {recommendations.first_name} {recommendations.last_name}
             </p>
             <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
+              <small className="text-muted"></small>
             </p>
           </div>
         </div>

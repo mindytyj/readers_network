@@ -39,7 +39,7 @@ async function getLike(req, res) {
     const postId = req.params.postId;
 
     const like = await pool.query(
-      "SELECT user_id FROM feed_likes WHERE feed_post_id = ($1) AND user_id = ($2);",
+      "SELECT user_id FROM feed_likes WHERE feed_post_id = ($1) AND user_id = ($2)",
       [postId, userId]
     );
 

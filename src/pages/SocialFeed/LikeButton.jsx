@@ -40,7 +40,7 @@ export default function LikeButton({ post, setLikeUpdate }) {
           setLikeUpdate={setLikeUpdate}
         />
       )}{" "}
-      {post.likes} likes
+      {post.likes} {post.likes > 1 ? "likes" : "like"}
     </div>
   );
 }

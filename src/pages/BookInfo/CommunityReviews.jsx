@@ -16,7 +16,7 @@ export default function CommunityReviews() {
     async function getCommunityReviews() {
       try {
         const communityReviews = await requestHandler(
-          `/api/reviews/community/${bookId}/${user?.id}`,
+          `/api/community/${bookId}`,
           "GET"
         );
 
@@ -46,7 +46,7 @@ export default function CommunityReviews() {
           })
         ) : (
           <div className="d-flex justify-content-center mt-2">
-            <h6 className="">No reviews available.</h6>
+            <h6>No reviews available.</h6>
           </div>
         )}
       </div>

@@ -20,3 +20,7 @@ export function updateProfile(userId, userInfo) {
 export function searchBook(bookTitle) {
   return requestHandler("/api/books/search", "POST", bookTitle);
 }
+
+export function searchGroup(groupSearch) {
+  return requestHandler("/api/groups/search", "POST", groupSearch);
+}
