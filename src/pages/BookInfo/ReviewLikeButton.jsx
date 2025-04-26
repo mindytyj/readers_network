@@ -11,6 +11,10 @@ export default function ReviewLikeButton({ review, setLikeUpdate }) {
 
   useEffect(() => {
     async function getLike() {
+      if (!user) {
+        return;
+      }
+
       try {
         const userLike = await requestHandler(
           `/api/community/${user?.id}/likes/${review.id}`,

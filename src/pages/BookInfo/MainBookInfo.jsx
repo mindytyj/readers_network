@@ -1,5 +1,7 @@
 import { useAtomValue } from "jotai";
 import { bookAtom } from "../../handlers/bookAtom";
+import AddToCartButton from "./AddToCartButton";
+import AddToWishlistButton from "./AddToWishlistButton";
 import BooksToReadButton from "./BooksToReadButton";
 
 export default function MainBookInfo() {
@@ -18,6 +20,8 @@ export default function MainBookInfo() {
           </p>
         </div>
         <BooksToReadButton />
+        <AddToWishlistButton />
+        <AddToCartButton />
       </div>
     </div>
   );

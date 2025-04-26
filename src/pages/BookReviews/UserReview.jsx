@@ -12,16 +12,18 @@ export default function UserReview() {
   const [userReview, setUserReview] = useState([]);
   const [reviewUpdate, setReviewUpdate] = useState(false);
 
-  console.log(reviewUpdate);
-
   useEffect(() => {
     async function getUserReview() {
+      if (!user) {
+        return;
+      }
+
       try {
         const review = await requestHandler(
           `/api/reviews/${bookId}/${user?.id}`,
           "GET"
         );
-        console.log(review);
+
         setUserReview(review);
       } catch (error) {
         console.error("Unable to get user review.");

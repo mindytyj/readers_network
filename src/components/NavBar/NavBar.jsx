@@ -79,6 +79,19 @@ export default function NavBar() {
                     </li>
                     <li>
                       <Link
+                        to={`/wishlist/${user.id}`}
+                        className="dropdown-item"
+                      >
+                        Wishlist
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={`/orders/${user.id}`} className="dropdown-item">
+                        Order History
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
                         to="/"
                         className="dropdown-item"
                         onClick={() => handleLogout()}
@@ -87,6 +100,11 @@ export default function NavBar() {
                       </Link>
                     </li>
                   </ul>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={`/cart/${user.id}`}>
+                    <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+                  </Link>
                 </li>
               </ul>
             ) : (
@@ -113,6 +131,11 @@ export default function NavBar() {
                       </Link>
                     </li>
                   </ul>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/login"}>
+                    <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+                  </Link>
                 </li>
               </ul>
             )}

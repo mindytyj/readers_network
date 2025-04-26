@@ -21,6 +21,10 @@ import Groups from "../Groups/Groups";
 import GroupInfo from "../GroupInfo/GroupInfo";
 import DiscussionPostComments from "../DiscussionPostComments/DiscussionPostComments";
 import GroupTopicPosts from "../GroupTopicPosts/GroupTopicPosts";
+import Wishlist from "../Wishlist/Wishlist";
+import Cart from "../Cart/Cart";
+import Payment from "../Payment/Payment";
+import OrderHistory from "../OrderHistory/OrderHistory";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -63,6 +67,10 @@ export default function App() {
           <Route path="/community/:reviewId" element={<ReviewComments />} />
           <Route path="/social-feed" element={<SocialFeed />} />
           <Route path="/social-feed/:postId" element={<PostComments />} />
+          <Route path="/wishlist/:userId" element={<Wishlist />} />
+          <Route path="/cart/:userId" element={<Cart />} />
+          <Route path="/payment/:userId" element={<Payment />} />
+          <Route path="/orders/:userId" element={<OrderHistory />} />
         </Route>
       </Routes>
     </main>

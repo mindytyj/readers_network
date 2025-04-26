@@ -28,12 +28,21 @@ export default function BooksToReadButton() {
     }
   }
 
-  return (
+  return user ? (
     <div>
       <Link className="text-decoration-none text-dark" onClick={addBookToRead}>
         <p>
-          <i className="bi bi-bookmark-plus-fill text-primary"></i> Add to Books
-          to Read List
+          <i className="bi bi-bookmark-plus-fill text-primary"></i> Add to
+          Future Reads List
+        </p>
+      </Link>
+    </div>
+  ) : (
+    <div>
+      <Link className="text-decoration-none text-dark" to={"/login"}>
+        <p>
+          <i className="bi bi-bookmark-plus-fill text-primary"></i> Add to
+          Future Reads List
         </p>
       </Link>
     </div>
