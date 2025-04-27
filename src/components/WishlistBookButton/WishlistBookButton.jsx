@@ -1,11 +1,10 @@
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 import requestHandler from "../../handlers/request-handler";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
-export default function AddToWishlistButton() {
-  const { bookId } = useParams();
+export default function WishlistBookButton({ bookId }) {
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
   const [wishlistStatus, setWishlistStatus] = useState([]);
@@ -43,38 +42,20 @@ export default function AddToWishlistButton() {
 
   return user ? (
     wishlistStatus > 0 ? (
-      <div>
-        <Link
-          className="text-decoration-none text-dark"
-          to={`/wishlist/${user.id}`}
-        >
-          <p>
-            <i className="bi bi-bookmark-check-fill text-danger pe-2"></i>In
-            Wishlist
-          </p>
-        </Link>
-      </div>
+      <Link
+        className="text-decoration-none text-dark"
+        to={`/wishlist/${user.id}`}
+      >
+        <i className="bi bi-bookmark-check-fill text-danger pe-2"></i>
+      </Link>
     ) : (
-      <div>
-        <Link
-          className="text-decoration-none text-dark"
-          onClick={addToWishlist}
-        >
-          <p>
-            <i className="bi bi-bookmark-heart-fill text-danger pe-2"></i>Add to
-            Wishlist
-          </p>
-        </Link>
-      </div>
+      <Link className="text-decoration-none text-dark" onClick={addToWishlist}>
+        <i className="bi bi-bookmark-heart-fill text-danger pe-2"></i>
+      </Link>
     )
   ) : (
-    <div>
-      <Link className="text-decoration-none text-dark" to={"/login"}>
-        <p>
-          <i className="bi bi-bookmark-heart-fill text-danger pe-2"></i>Add to
-          Wishlist
-        </p>
-      </Link>
-    </div>
+    <Link className="text-decoration-none text-dark" to={"/login"}>
+      <i className="bi bi-bookmark-heart-fill text-danger pe-2"></i>
+    </Link>
   );
 }

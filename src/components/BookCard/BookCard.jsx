@@ -1,4 +1,7 @@
 import { Link } from "react-router";
+import CartBookButton from "../CartBookButton/CartBookButton";
+import FutureReadsButton from "../FutureReadsBookButton/FutureReadsBookButton";
+import WishlistBookButton from "../WishlistBookButton/WishlistBookButton";
 
 export default function BookCard({ bookResult, setError }) {
   return (
@@ -14,11 +17,15 @@ export default function BookCard({ bookResult, setError }) {
         <div className="card-body">
           <h5 className="card-title">{bookResult?.title}</h5>
           <p className="card-text">
-            Author: {bookResult?.first_name} {bookResult?.last_name}
+            by {bookResult?.first_name} {bookResult?.last_name}
           </p>
         </div>
         <div className="card-footer">
-          <small className="text-muted">Last updated 3 mins ago</small>
+          <div>
+            <FutureReadsButton bookId={bookResult?.id} />
+            <WishlistBookButton bookId={bookResult?.id} />
+            <CartBookButton bookId={bookResult?.id} />
+          </div>
         </div>
       </div>
     </div>

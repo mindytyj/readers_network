@@ -66,7 +66,7 @@ export default function DiscussionBoard() {
             )}
           </div>
         </div>
-        <div className="col-4 mt-4 mb-4">
+        <div className="col-4 mt-2 mb-4">
           <div id="discussion-list" className="list-group">
             {topics?.length > 0 ? (
               topics.map((topic) => {
@@ -79,7 +79,7 @@ export default function DiscussionBoard() {
             )}
           </div>
         </div>
-        <div className="col-8 mt-4">
+        <div className="col-8 mt-2">
           <div
             data-bs-spy="scroll"
             data-bs-target="#discussion-list"

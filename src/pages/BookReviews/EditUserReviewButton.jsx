@@ -20,15 +20,14 @@ export default function EditUserReviewButton({ userReview, setReviewUpdate }) {
       <p className="mb-2">{userReview?.review}</p>
       <div className="row">
         <div className="col-md-1">
-          {" "}
           <Link
             to={`/books/${book.id}/review/edit`}
             className="text-decoration-none text-dark"
           >
-            <i className="bi bi-pen-fill text-primary"></i> Edit
+            <i className="bi bi-pen-fill text-primary pe-2"></i>Edit
           </Link>
         </div>
-        <div className="col-md-1">
+        <div className="col-md-2">
           <DeleteUserReview
             bookId={book.id}
             setReviewUpdate={setReviewUpdate}

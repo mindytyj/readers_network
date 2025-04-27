@@ -1,26 +1,43 @@
-export default function ProfileBookCard({ book, type }) {
+import { Link } from "react-router";
+import RemoveBookTrackerButton from "../RemoveBookTrackerButton/RemoveBookTrackerButton";
+
+export default function ProfileBookCard({ book, type, setRemoveBookUpdate }) {
   return (
     <div className="card mb-3" style={{ maxWidth: 500 }}>
       <div className="row g-0">
         <div className="col-md-4">
-          <img
-            src={book?.image_url}
-            className="img-fluid rounded-start"
-            alt={book?.title}
-          />
+          <Link to={`/books/${book?.book_id}`}>
+            <img
+              src={book?.image_url}
+              className="img-fluid rounded-start"
+              alt={book?.title}
+            />
+          </Link>
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-title">{book?.title}</h5>
+            <Link
+              className="text-decoration-none text-dark"
+              to={`/books/${book?.book_id}`}
+            >
+              <h5 className="card-title">{book?.title}</h5>
+            </Link>
             <p className="card-text">
-              Author: {book?.first_name} {book?.last_name}
+              by {book?.first_name} {book?.last_name}
             </p>
             <p className="card-text">
               <small className="text-muted">
-                {type == "completed" ? "Completed" : "Added"} on:{" "}
+                {type == "completed-books" ? "Completed" : "Added"} on{" "}
                 {book?.created_date}
               </small>
             </p>
+            <div>
+              <RemoveBookTrackerButton
+                bookId={book?.book_id}
+                type={type}
+                setRemoveBookUpdate={setRemoveBookUpdate}
+              />
+            </div>
           </div>
         </div>
       </div>

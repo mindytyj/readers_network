@@ -21,6 +21,6 @@ export default function AddLike({ reviewId, setLike, setLikeUpdate }) {
   }
 
   return (
-    <i className="bi bi-hand-thumbs-up text-primary" onClick={addLike}></i>
+    <i className="bi bi-hand-thumbs-up text-primary pe-2" onClick={addLike}></i>
   );
 }

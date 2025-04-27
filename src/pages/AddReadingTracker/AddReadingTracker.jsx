@@ -14,7 +14,7 @@ export default function AddReadingTracker() {
 
   useEffect(() => {
     if (!user) {
-      navigate("/");
+      navigate("/login");
     }
   }, [user]);
 
@@ -31,7 +31,7 @@ export default function AddReadingTracker() {
             {book?.length > 0 ? (
               book.map((bookResult) => {
                 return (
-                  <div>
+                  <div key={bookResult?.id}>
                     <BookResult
                       bookResult={bookResult}
                       setError={setError}

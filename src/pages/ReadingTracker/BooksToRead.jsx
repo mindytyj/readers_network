@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
 import requestHandler from "../../handlers/request-handler";
 
 export default function BooksToRead() {
   const { userId } = useParams();
   const [booksToRead, setBooksToRead] = useState([]);
+  const [removeBookUpdate, setRemoveBookUpdate] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,23 +22,20 @@ export default function BooksToRead() {
       }
     }
     getBooksToRead();
-  }, []);
+  }, [removeBookUpdate]);
 
   return (
     <div className="mb-4">
       <div className="row mb-2">
         <div className="col">
-          <h5>Books To Read</h5>
+          <h5>Future Reads</h5>
         </div>
         <div className="col d-flex justify-content-md-end">
-          <h5>
-            <i
-              className="bi bi-plus-circle-fill text-primary"
-              onClick={() => {
-                navigate(`/books`);
-              }}
-            ></i>
-          </h5>
+          <Link to={`/books`}>
+            <h5>
+              <i className="bi bi-plus-circle-fill text-primary"></i>
+            </h5>
+          </Link>
         </div>
       </div>
       <div className="d-flex justify-content-center card-group">
@@ -45,7 +43,11 @@ export default function BooksToRead() {
           booksToRead.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} />
+                <ProfileBookCard
+                  book={book}
+                  type={"books-to-read"}
+                  setRemoveBookUpdate={setRemoveBookUpdate}
+                />
               </div>
             );
           })

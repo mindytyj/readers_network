@@ -43,7 +43,7 @@ export default function ReviewLikeButton({ review, setLikeUpdate }) {
           setLike={setLike}
           setLikeUpdate={setLikeUpdate}
         />
-      )}{" "}
+      )}
       {review.likes} {review.likes > 1 ? "likes" : "like"}
     </div>
   );

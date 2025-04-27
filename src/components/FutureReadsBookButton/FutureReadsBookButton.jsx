@@ -1,11 +1,10 @@
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 import requestHandler from "../../handlers/request-handler";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
-export default function BooksToReadButton() {
-  const { bookId } = useParams();
+export default function FutureReadsButton({ bookId }) {
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
   const [futureReadsStatus, setFutureReadsStatus] = useState([]);
@@ -51,38 +50,20 @@ export default function BooksToReadButton() {
 
   return user ? (
     futureReadsStatus > 0 ? (
-      <div>
-        <Link
-          className="text-decoration-none text-dark"
-          to={`/account/${user.id}`}
-        >
-          <p>
-            <i className="bi bi-bookmark-check-fill text-primary pe-2"></i>In
-            Future Reads List
-          </p>
-        </Link>
-      </div>
+      <Link
+        className="text-decoration-none text-dark"
+        to={`/account/${user.id}`}
+      >
+        <i className="bi bi-bookmark-check-fill text-primary pe-2"></i>
+      </Link>
     ) : (
-      <div>
-        <Link
-          className="text-decoration-none text-dark"
-          onClick={addBookToRead}
-        >
-          <p>
-            <i className="bi bi-bookmark-plus-fill text-primary pe-2"></i>Add to
-            Future Reads List
-          </p>
-        </Link>
-      </div>
+      <Link className="text-decoration-none text-dark" onClick={addBookToRead}>
+        <i className="bi bi-bookmark-plus-fill text-primary pe-2"></i>
+      </Link>
     )
   ) : (
-    <div>
-      <Link className="text-decoration-none text-dark" to={"/login"}>
-        <p>
-          <i className="bi bi-bookmark-plus-fill text-primary pe-2"></i>Add to
-          Future Reads List
-        </p>
-      </Link>
-    </div>
+    <Link className="text-decoration-none text-dark" to={"/login"}>
+      <i className="bi bi-bookmark-plus-fill text-primary pe-2"></i>
+    </Link>
   );
 }

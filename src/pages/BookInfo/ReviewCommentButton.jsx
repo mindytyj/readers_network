@@ -10,7 +10,10 @@ export default function ReviewCommentButton({ review }) {
 
   return (
     <div className="col">
-      <i className="bi bi-chat-dots text-primary" onClick={handleClick}></i>{" "}
+      <i
+        className="bi bi-chat-dots text-primary pe-2"
+        onClick={handleClick}
+      ></i>
       Comment
     </div>
   );

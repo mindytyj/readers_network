@@ -9,8 +9,8 @@ export default function ChatsListItem({ chat, userId }) {
       <li className="list-group-item d-flex justify-content-between align-items-start">
         <div className="ms-2 me-auto">
           <div className="fw-bold">
-            {chat.first_name} {chat.last_name}{" "}
-            <i className="bi bi-chat-fill text-primary"></i>
+            {chat.first_name} {chat.last_name}
+            <i className="bi bi-chat-fill text-primary ps-2"></i>
           </div>
           <span className="text-truncate">{chat.message}</span>
         </div>

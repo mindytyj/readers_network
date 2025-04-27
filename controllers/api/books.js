@@ -37,12 +37,14 @@ async function getBookRecommendations(req, res) {
 }
 
 async function getBookInfo(req, res) {
-  const bookId = req.params.bookId;
   try {
+    const bookId = req.params.bookId;
+
     const book = await pool.query(
       "SELECT books.id, books.title, genres.genre_name, books.description, languages.language_name, books.pages, books.isbn, books.publication_date, publishers.publisher_name, authors.first_name, authors.last_name, books.image_url FROM books JOIN genres ON genres.id = books.genre_id JOIN languages ON languages.id = books.language_id JOIN publishers ON publishers.id = books.publisher_id JOIN authors ON authors.id = books.author_id WHERE books.id = ($1)",
       [bookId]
     );
+
     res.json(book.rows[0]);
   } catch {
     res.status(400).json("Unable to retrieve book information.");
@@ -50,10 +52,11 @@ async function getBookInfo(req, res) {
 }
 
 async function getCompletedBooks(req, res) {
-  const userId = req.params.userId;
   try {
+    const userId = req.params.userId;
+
     const completedBooks = await pool.query(
-      "SELECT books_tracker.id, books_tracker.completion_status, books.title, books.image_url, authors.first_name, authors.last_name FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_tracker.user_id = ($1) AND books_tracker.completion_status is true",
+      "SELECT books_tracker.id, books_tracker.book_id, books_tracker.created_date, books_tracker.completion_status, books.title, books.image_url, authors.first_name, authors.last_name FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_tracker.user_id = ($1) AND books_tracker.completion_status is true",
       [userId]
     );
 
@@ -67,12 +70,14 @@ async function getCompletedBooks(req, res) {
 }
 
 async function getBooksInProgress(req, res) {
-  const userId = req.params.userId;
   try {
+    const userId = req.params.userId;
+
     const booksInProgress = await pool.query(
-      "SELECT books_tracker.id, books_tracker.completion_status, books.title, books.image_url, authors.first_name, authors.last_name FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_tracker.user_id = ($1) AND books_tracker.completion_status is false",
+      "SELECT books_tracker.id, books_tracker.book_id, books_tracker.created_date, books_tracker.completion_status, books.title, books.image_url, authors.first_name, authors.last_name FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_tracker.user_id = ($1) AND books_tracker.completion_status is false",
       [userId]
     );
+
     if (!booksInProgress)
       throw new Error("There are no books in-progress available.");
 
@@ -82,18 +87,36 @@ async function getBooksInProgress(req, res) {
   }
 }
 
-async function getBooksToRead(req, res) {
-  const userId = req.params.userId;
+async function getFutureReads(req, res) {
   try {
-    const booksToRead = await pool.query(
-      "SELECT books_to_read.id, books.title, books.image_url, authors.first_name, authors.last_name FROM books_to_read LEFT JOIN books ON books_to_read.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_to_read.user_id = ($1)",
+    const userId = req.params.userId;
+
+    const futureReads = await pool.query(
+      "SELECT books_to_read.id, books_to_read.book_id, books_to_read.created_date, books.title, books.image_url, authors.first_name, authors.last_name FROM books_to_read LEFT JOIN books ON books_to_read.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE books_to_read.user_id = ($1)",
       [userId]
     );
-    if (!booksToRead) throw new Error("There are no books available.");
 
-    res.status(200).json(booksToRead.rows);
+    if (!futureReads) throw new Error("There are no books available.");
+
+    res.status(200).json(futureReads.rows);
   } catch {
-    res.status(400).json("Unable to retrieve profile books to read.");
+    res.status(400).json("Unable to retrieve profile future reads.");
+  }
+}
+
+async function getFutureReadsStatus(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    const booksToRead = await pool.query(
+      "SELECT book_id FROM books_to_read WHERE user_id = ($1) AND book_id = ($2)",
+      [userId, bookId]
+    );
+
+    res.status(200).json(booksToRead.rowCount);
+  } catch {
+    res.status(400).json("Unable to retrieve future reads status.");
   }
 }
 
@@ -111,6 +134,38 @@ async function searchBook(req, res) {
     res.status(200).json(books.rows);
   } catch {
     res.status(400).json("Unable to search for the book(s).");
+  }
+}
+
+async function getCompletedBookStatus(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    const bookStatus = await pool.query(
+      "SELECT book_id FROM books_tracker WHERE user_id = ($1) AND book_id = ($2)",
+      [userId, bookId]
+    );
+
+    res.status(200).json(bookStatus.rowCount);
+  } catch (error) {
+    res.status(400).json("Unable to retrieve user's completed book status.");
+  }
+}
+
+async function getBookInProgressStatus(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    const bookStatus = await pool.query(
+      "SELECT book_id FROM books_tracker WHERE user_id = ($1) AND book_id = ($2)",
+      [userId, bookId]
+    );
+
+    res.status(200).json(bookStatus.rowCount);
+  } catch (error) {
+    res.status(400).json("Unable to retrieve user's book in-progress status.");
   }
 }
 
@@ -188,15 +243,77 @@ async function addBookToRead(req, res) {
   }
 }
 
+async function removeCompletedBook(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    await pool.query(
+      "DELETE FROM books_tracker WHERE user_id = ($1) AND book_id = ($2) AND completion_status = ($3)",
+      [userId, bookId, true]
+    );
+
+    res
+      .status(200)
+      .json("Book has been successfully removed from Books Completed tracker.");
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+}
+
+async function removeBookInProgress(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    await pool.query(
+      "DELETE FROM books_tracker WHERE user_id = ($1) AND book_id = ($2) AND completion_status = ($3)",
+      [userId, bookId, false]
+    );
+
+    res
+      .status(200)
+      .json(
+        "Book has been successfully removed from Books In-Progress tracker."
+      );
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+}
+
+async function removeBookToRead(req, res) {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    await pool.query(
+      "DELETE FROM books_to_read WHERE user_id = ($1) AND book_id = ($2)",
+      [userId, bookId]
+    );
+
+    res
+      .status(200)
+      .json("Book has been successfully removed from Future Reads tracker.");
+  } catch (error) {
+    res.status(400).json(error.message);
+  }
+}
+
 module.exports = {
   getBooks,
   getBookRecommendations,
   getBookInfo,
   getCompletedBooks,
   getBooksInProgress,
-  getBooksToRead,
+  getFutureReads,
+  getFutureReadsStatus,
   searchBook,
+  getCompletedBookStatus,
+  getBookInProgressStatus,
   addCompletedBook,
   addBookInProgress,
   addBookToRead,
+  removeCompletedBook,
+  removeBookInProgress,
+  removeBookToRead,
 };

@@ -8,6 +8,7 @@ async function login(req, res) {
       "SELECT id, first_name, last_name, username FROM users WHERE username = ($1)",
       [req.body.username]
     );
+
     if (user.rowCount == 0) throw new Error("User not found.");
 
     const password = await pool.query(
@@ -19,6 +20,7 @@ async function login(req, res) {
       req.body.password,
       password.rows[0].password
     );
+
     if (!match) throw new Error("Incorrect password provided.");
 
     res.status(200).json(createJWTToken(user.rows[0]));
@@ -39,6 +41,7 @@ async function register(req, res) {
       "SELECT username FROM users WHERE lower(username) = ($1)",
       [req.body.username]
     );
+
     if (checkUsername.rowCount > 0)
       throw new Error("Username is already taken.");
 

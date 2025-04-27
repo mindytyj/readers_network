@@ -32,7 +32,7 @@ export default function CommunityReviews() {
     <div className="container mt-4 mb-3">
       <div className="row text-center mt-4 mb-3">
         <div>
-          <h5>Community Reviews</h5>
+          <h5>Community Ratings and Reviews</h5>
         </div>
       </div>
       <div className="list-group">

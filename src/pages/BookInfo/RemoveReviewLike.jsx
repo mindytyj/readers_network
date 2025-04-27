@@ -27,7 +27,7 @@ export default function RemoveReviewLike({
 
   return (
     <i
-      className="bi bi-hand-thumbs-up-fill text-primary"
+      className="bi bi-hand-thumbs-up-fill text-primary pe-2"
       onClick={removeLike}
     ></i>
   );

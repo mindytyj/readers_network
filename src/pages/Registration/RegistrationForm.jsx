@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { register } from "../../handlers/api-requests";
+import * as usersTokenHandlers from "../../handlers/users-token-handlers";
 import { useSetAtom } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
 
@@ -39,7 +39,7 @@ export default function RegistrationForm() {
       }
 
       delete userData.confirmPW;
-      const user = await register(userData);
+      const user = await usersTokenHandlers.register(userData);
       setUser(user);
     } catch {
       setError("Username is already taken.");

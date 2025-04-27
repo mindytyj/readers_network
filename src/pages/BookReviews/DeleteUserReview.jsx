@@ -27,7 +27,7 @@ export default function DeleteUserReview({ bookId, setReviewUpdate }) {
         className="text-decoration-none text-dark"
         onClick={removeUserReview}
       >
-        <i className="bi bi-x-circle-fill text-danger"></i> Remove
+        <i className="bi bi-x-circle-fill text-danger pe-2"></i>Remove
       </Link>
     </span>
   );

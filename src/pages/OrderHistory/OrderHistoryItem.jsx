@@ -24,12 +24,14 @@ export default function OrderHistoryItem({ book }) {
         <div className="ms-2">
           by {book.first_name} {book.last_name}
         </div>
-        <div className="mt-2 ms-2">${book.rental_price}</div>
+        <div className="mt-2 ms-2">
+          <small>${book.rental_price}</small>
+        </div>
         <div className="ms-2">
-          <p>{book.rental_duration} days rental</p>
+          <small>{book.rental_duration} days rental</small>
         </div>
         <div className="mt-2 ms-2 fst-italic">
-          Rented on {book.created_date}
+          <small>Rented on {book.created_date}</small>
         </div>
       </div>
     </li>

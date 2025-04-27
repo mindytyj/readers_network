@@ -35,7 +35,7 @@ export default function GroupTopicPosts() {
         </div>
       </div>
       <div className="container border border-primary rounded">
-        <div className="list-group mt-3 mb-3 overflow-y-auto allDiscussionPostsContainer">
+        <div className="list-group mt-3 mb-3 overflow-y-auto allDiscussionPostsContainer rounded-0">
           {posts?.length > 0 ? (
             posts.map((post) => {
               return (

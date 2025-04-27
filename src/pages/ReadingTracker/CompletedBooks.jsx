@@ -7,6 +7,7 @@ import requestHandler from "../../handlers/request-handler";
 export default function CompletedBooks() {
   const { userId } = useParams();
   const [completedBooks, setCompletedBooks] = useState([]);
+  const [removeBookUpdate, setRemoveBookUpdate] = useState(false);
 
   useEffect(() => {
     async function getCompletedBooks() {
@@ -21,9 +22,7 @@ export default function CompletedBooks() {
       }
     }
     getCompletedBooks();
-  }, []);
-
-  console.log(completedBooks);
+  }, [removeBookUpdate]);
 
   return (
     <div className="mb-4">
@@ -42,7 +41,11 @@ export default function CompletedBooks() {
           completedBooks.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} type={"completed"} />
+                <ProfileBookCard
+                  book={book}
+                  type={"completed-books"}
+                  setRemoveBookUpdate={setRemoveBookUpdate}
+                />
               </div>
             );
           })

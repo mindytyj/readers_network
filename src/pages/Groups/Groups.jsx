@@ -47,20 +47,22 @@ export default function Groups() {
           ""
         )}
       </div>
-      <div className="list-group overflow-y-auto groupsContainer rounded-0 border border-primary">
-        {groups?.length > 0 ? (
-          groups.map((group) => {
-            return (
-              <div key={group?.id}>
-                <GroupListItem group={group} groupCount={groups.length} />
-              </div>
-            );
-          })
-        ) : (
-          <div className="d-flex justify-content-center mt-4">
-            <h6 className="">No groups found.</h6>
-          </div>
-        )}
+      <div className="container border border-primary rounded">
+        <div className="list-group mt-3 mb-3 overflow-y-auto groupsContainer rounded-0">
+          {groups?.length > 0 ? (
+            groups.map((group) => {
+              return (
+                <div key={group?.id}>
+                  <GroupListItem group={group} groupCount={groups.length} />
+                </div>
+              );
+            })
+          ) : (
+            <div className="d-flex justify-content-center mt-4">
+              <h6 className="">No groups found.</h6>
+            </div>
+          )}
+        </div>
       </div>
       <AddGroupModal
         groupModal={groupModal}

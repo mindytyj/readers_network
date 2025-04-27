@@ -7,6 +7,7 @@ import requestHandler from "../../handlers/request-handler";
 export default function BooksInProgress() {
   const { userId } = useParams();
   const [booksInProgress, setBooksInProgress] = useState([]);
+  const [removeBookUpdate, setRemoveBookUpdate] = useState(false);
 
   useEffect(() => {
     async function getBooksInProgress() {
@@ -15,13 +16,13 @@ export default function BooksInProgress() {
           `/api/books/${userId}/books-in-progress`,
           "GET"
         );
-        setBooksInProgress(books.rows);
+        setBooksInProgress(books);
       } catch {
         console.error("Failed to retrieve profile books in-progress.");
       }
     }
     getBooksInProgress();
-  }, []);
+  }, [removeBookUpdate]);
 
   return (
     <div className="mb-4">
@@ -40,7 +41,11 @@ export default function BooksInProgress() {
           booksInProgress.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} />
+                <ProfileBookCard
+                  book={book}
+                  type={"books-in-progress"}
+                  setRemoveBookUpdate={setRemoveBookUpdate}
+                />
               </div>
             );
           })

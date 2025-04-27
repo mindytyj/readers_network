@@ -15,8 +15,8 @@ export default function AddUserReviewButton() {
         className="text-decoration-none text-dark"
       >
         <p>
-          <i className="bi bi-plus-circle-fill text-primary"></i> Add Review and
-          Rating
+          <i className="bi bi-plus-circle-fill text-primary pe-2"></i>Add Rating
+          and Review
         </p>
       </Link>
     </div>
@@ -24,8 +24,8 @@ export default function AddUserReviewButton() {
     <div>
       <Link to={`/login`} className="text-decoration-none text-dark">
         <p>
-          <i className="bi bi-plus-circle-fill text-primary"></i> Add Review and
-          Rating
+          <i className="bi bi-plus-circle-fill text-primary pe-2"></i>Add Rating
+          and Review
         </p>
       </Link>
     </div>

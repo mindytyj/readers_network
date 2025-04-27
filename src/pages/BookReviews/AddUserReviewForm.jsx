@@ -22,7 +22,7 @@ export default function AddUserReviewForm() {
   async function handleSubmit(evt) {
     evt.preventDefault();
 
-    if (userReview.rating == "" || userReview.review == "") {
+    if (userReview.rating === "" || userReview.review === "") {
       setError(
         "There is no review added. Please write a review and try again."
       );
@@ -31,7 +31,6 @@ export default function AddUserReviewForm() {
 
     try {
       const reviewData = { ...userReview };
-      console.log(reviewData);
 
       await requestHandler(`/api/reviews/add/${bookId}/${user?.id}`, "POST", {
         reviewData,
