@@ -66,7 +66,7 @@ export default function CartBookButton({ bookId }) {
       orderHistory === 0 ? (
         <Link
           className="text-decoration-none text-dark"
-          to={`/orders/${user.id}`}
+          to={`/ebook-read/${bookId}`}
         >
           <i className="bi bi-book-fill text-primary"></i>
         </Link>
@@ -81,7 +81,7 @@ export default function CartBookButton({ bookId }) {
     ) : orderHistory === 0 ? (
       <Link
         className="text-decoration-none text-dark"
-        to={`/orders/${user.id}`}
+        to={`/ebook-read/${bookId}`}
       >
         <i className="bi bi-book-fill text-primary"></i>
       </Link>

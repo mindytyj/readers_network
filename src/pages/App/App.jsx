@@ -25,6 +25,8 @@ import Wishlist from "../Wishlist/Wishlist";
 import Cart from "../Cart/Cart";
 import Payment from "../Payment/Payment";
 import OrderHistory from "../OrderHistory/OrderHistory";
+import EBooks from "../EBooks/EBooks";
+import ReadEBook from "../ReadEBook/ReadEBook";
 
 export default function App() {
   const user = useAtomValue(userAtom);
@@ -71,6 +73,8 @@ export default function App() {
           <Route path="/cart/:userId" element={<Cart />} />
           <Route path="/payment/:userId" element={<Payment />} />
           <Route path="/orders/:userId" element={<OrderHistory />} />
+          <Route path="/ebooks/:userId" element={<EBooks />} />
+          <Route path="/ebook-read/:bookId" element={<ReadEBook />} />
         </Route>
       </Routes>
     </main>

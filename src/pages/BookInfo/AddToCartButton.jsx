@@ -68,7 +68,7 @@ export default function AddToCartButton() {
         <div>
           <Link
             className="text-decoration-none text-dark"
-            to={`/orders/${user.id}`}
+            to={`/ebook-read/${bookId}`}
           >
             <button className="btn btn-primary btn-sm">Read eBook</button>
           </Link>
@@ -87,7 +87,7 @@ export default function AddToCartButton() {
       <div>
         <Link
           className="text-decoration-none text-dark"
-          to={`/orders/${user.id}`}
+          to={`/ebook-read/${bookId}`}
         >
           <button className="btn btn-primary btn-sm">Read eBook</button>
         </Link>

@@ -32,7 +32,7 @@ app.use("/api/discussions", require("./routes/api/discussions"));
 app.use("/api/wishlists", require("./routes/api/wishlists"));
 app.use("/api/carts", require("./routes/api/carts"));
 app.use("/api/orders", require("./routes/api/orders"));
-// app.use("/api/ebooks", require("./routes/api/ebooks"));
+app.use("/api/ebooks", require("./routes/api/ebooks"));
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));

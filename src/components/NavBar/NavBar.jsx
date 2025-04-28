@@ -78,6 +78,11 @@ export default function NavBar() {
                       </Link>
                     </li>
                     <li>
+                      <Link to={`/ebooks/${user.id}`} className="dropdown-item">
+                        eBooks
+                      </Link>
+                    </li>
+                    <li>
                       <Link
                         to={`/wishlist/${user.id}`}
                         className="dropdown-item"

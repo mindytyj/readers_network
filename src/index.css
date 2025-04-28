@@ -30,6 +30,11 @@ code {
   max-height: 700px;
 }
 
+.eBook {
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
 textarea {
   resize: none;
 }
