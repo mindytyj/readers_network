@@ -9,7 +9,7 @@ async function login(req, res) {
       [req.body.username]
     );
 
-    if (user.rowCount == 0) throw new Error("User not found.");
+    if (user.rowCount === 0) throw new Error("User not found.");
 
     const password = await pool.query(
       "SELECT password FROM users WHERE username = ($1)",
@@ -66,7 +66,7 @@ async function updateProfile(req, res) {
   const userId = req.params.userId;
 
   try {
-    if (req.body.password != "") {
+    if (req.body.password !== "") {
       const hashedPW = await bcrypt.hash(
         req.body.password,
         parseInt(process.env.SALT_ROUNDS)
@@ -133,6 +133,61 @@ async function removeFriend(req, res) {
   }
 }
 
+async function getUserProfile(req, res) {
+  const userId = req.params.userId;
+
+  try {
+    const user = await pool.query(
+      "SELECT id, first_name, last_name, username FROM users WHERE id = ($1)",
+      [userId]
+    );
+
+    if (!user) throw new Error("User not found.");
+
+    res.status(200).json(user.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json(err.message);
+  }
+}
+
+async function getFriendStatus(req, res) {
+  try {
+    const userId = req.params.userId;
+    const friendId = req.params.friendId;
+
+    const friendStatus = await pool.query(
+      "SELECT friend_id FROM friends WHERE user_id = ($1) AND friend_id = ($2)",
+      [userId, friendId]
+    );
+
+    res.status(200).json(friendStatus.rowCount);
+  } catch {
+    res.status(400).json("Unable to retrieve user's friend status.");
+  }
+}
+
+async function addFriend(req, res) {
+  try {
+    const userId = req.params.userId;
+    const friendId = req.params.friendId;
+
+    await pool.query(
+      "INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)",
+      [userId, friendId]
+    );
+
+    await pool.query(
+      "INSERT INTO friends (user_id, friend_id) VALUES ($1, $2)",
+      [friendId, userId]
+    );
+
+    res.status(200).json("Successfully added friend to friend list.");
+  } catch {
+    res.status(400).json("Unable to add friend to friend list.");
+  }
+}
+
 function createJWTToken(user) {
   return jwt.sign({ user }, process.env.SECRET, { expiresIn: "1h" });
 }
@@ -143,4 +198,7 @@ module.exports = {
   updateProfile,
   getFriends,
   removeFriend,
+  getUserProfile,
+  getFriendStatus,
+  addFriend,
 };
