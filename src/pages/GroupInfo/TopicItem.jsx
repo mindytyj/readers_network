@@ -6,7 +6,7 @@ export default function TopicItem({ groupId, topicId, post }) {
       to={`/groups/${groupId}/topic/${topicId}/${post.id}`}
       className="text-decoration-none text-dark"
     >
-      <div className="list-group-item list-group-item-action">
+      <div className="list-group-item bg-primary-subtle border-white list-group-item-action">
         <div className="d-flex w-100 justify-content-between">
           <h5 className="mb-2">{post.sub_topic_title}</h5>
           <small>{post.topic_name}</small>

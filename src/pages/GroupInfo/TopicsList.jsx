@@ -42,7 +42,7 @@ export default function TopicsList({ groupId, topic, postUpdate }) {
       {posts?.length > 9 ? (
         <Link
           to={`/groups/${groupId}/topics/${topic.id}`}
-          className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+          className="link-primary text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
         >
           <div className="d-flex flex-row-reverse">
             <p>View more {topic.topic_name} posts</p>

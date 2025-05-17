@@ -47,7 +47,7 @@ export default function Groups() {
           ""
         )}
       </div>
-      <div className="container border border-primary rounded">
+      <div className="container text-white bg-primary bg-opacity-50 border border-primary rounded">
         <div className="list-group mt-3 mb-3 overflow-y-auto groupsContainer rounded-0">
           {groups?.length > 0 ? (
             groups.map((group) => {

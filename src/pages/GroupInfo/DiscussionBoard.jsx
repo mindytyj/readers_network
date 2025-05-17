@@ -42,7 +42,7 @@ export default function DiscussionBoard() {
           <h5>Discussion Board</h5>
         </div>
       </div>
-      <div className="row border border-primary rounded overflow-y-auto discussionsContainer">
+      <div className="row border text-white bg-primary bg-opacity-50 border-primary rounded overflow-y-auto discussionsContainer">
         <div className="row mt-4 mb-2">
           <div className="col-4">
             {user ? (
