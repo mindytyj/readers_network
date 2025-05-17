@@ -4,14 +4,14 @@ import requestHandler from "../../handlers/request-handler";
 import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
 
 export default function ProfileBooksInProgress() {
-  const { userId } = useParams();
+  const { profileId } = useParams();
   const [booksInProgress, setBooksInProgress] = useState([]);
 
   useEffect(() => {
     async function getBooksInProgress() {
       try {
         const books = await requestHandler(
-          `/api/books/${userId}/books-in-progress`,
+          `/api/books/${profileId}/books-in-progress`,
           "GET"
         );
         setBooksInProgress(books);
@@ -20,7 +20,7 @@ export default function ProfileBooksInProgress() {
       }
     }
     getBooksInProgress();
-  });
+  }, []);
 
   return (
     <div className="mb-4">
@@ -34,7 +34,11 @@ export default function ProfileBooksInProgress() {
           booksInProgress.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} type={"books-in-progress"} />
+                <ProfileBookCard
+                  book={book}
+                  type={"books-in-progress"}
+                  location={"profile"}
+                />
               </div>
             );
           })

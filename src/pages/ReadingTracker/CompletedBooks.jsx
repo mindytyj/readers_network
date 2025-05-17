@@ -44,6 +44,7 @@ export default function CompletedBooks() {
                 <ProfileBookCard
                   book={book}
                   type={"completed-books"}
+                  location={"user"}
                   setRemoveBookUpdate={setRemoveBookUpdate}
                 />
               </div>

@@ -1,4 +1,10 @@
+import dayjs from "dayjs";
+
 export default function ChatMessageItem({ userId, message }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+  }
+
   return (
     <div
       className={
@@ -11,7 +17,7 @@ export default function ChatMessageItem({ userId, message }) {
       <div className="ms-2 me-auto">
         <span className="text-break">{message.message}</span>
       </div>
-      <small className="">{message.sent_date}</small>
+      <small className="">{formatDate(message.sent_date)}</small>
     </div>
   );
 }

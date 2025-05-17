@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
 import requestHandler from "../../handlers/request-handler";
 
@@ -7,7 +7,6 @@ export default function BooksToRead() {
   const { userId } = useParams();
   const [booksToRead, setBooksToRead] = useState([]);
   const [removeBookUpdate, setRemoveBookUpdate] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function getBooksToRead() {
@@ -46,6 +45,7 @@ export default function BooksToRead() {
                 <ProfileBookCard
                   book={book}
                   type={"books-to-read"}
+                  location={"user"}
                   setRemoveBookUpdate={setRemoveBookUpdate}
                 />
               </div>

@@ -1,6 +1,11 @@
 import { Link } from "react-router";
+import dayjs from "dayjs";
 
 export default function GroupListItem({ group }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+  }
+
   return (
     <Link
       to={`/groups/${group.id}`}
@@ -9,7 +14,7 @@ export default function GroupListItem({ group }) {
       <div className="d-flex w-100 justify-content-between">
         <h5 className="mb-1">{group.group_name}</h5>
         <small className="text-body-secondary">
-          Created on {group.created_date}
+          Created on {formatDate(group.created_date)}
         </small>
       </div>
       <p className="mb-1 text-truncate">{group.group_description}</p>

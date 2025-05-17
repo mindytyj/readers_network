@@ -5,7 +5,7 @@ async function getOrders(req, res) {
     const userId = req.params.userId;
 
     const orderHistory = await pool.query(
-      "SELECT books.id, books.title, books.image_url, books.rental_price, books.rental_duration, authors.first_name, authors.last_name, orders.created_date FROM order_items LEFT JOIN books ON books.id = order_items.book_id LEFT JOIN orders ON orders.id = order_items.order_id LEFT JOIN authors ON books.author_id = authors.id WHERE orders.user_id = ($1) ORDER BY order_items.order_id DESC",
+      "SELECT order_items.id AS order_item_id, books.id, books.title, books.image_url, books.rental_price, books.rental_duration, authors.first_name, authors.last_name, orders.created_date FROM order_items LEFT JOIN books ON books.id = order_items.book_id LEFT JOIN orders ON orders.id = order_items.order_id LEFT JOIN authors ON books.author_id = authors.id WHERE orders.user_id = ($1) ORDER BY order_items.order_id DESC",
       [userId]
     );
 

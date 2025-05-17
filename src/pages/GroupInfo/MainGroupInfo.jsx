@@ -4,7 +4,11 @@ import { groupAtom } from "../../handlers/groupAtom";
 import { userAtom } from "../../handlers/userAtom";
 import JoinStatusButton from "./JoinStatusButton";
 
-export default function MainGroupInfo({ groupId, setJoinStatusUpdate }) {
+export default function MainGroupInfo({
+  groupId,
+  joinStatusUpdate,
+  setJoinStatusUpdate,
+}) {
   const group = useAtomValue(groupAtom);
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
@@ -22,6 +26,7 @@ export default function MainGroupInfo({ groupId, setJoinStatusUpdate }) {
         {user ? (
           <JoinStatusButton
             groupId={groupId}
+            joinStatusUpdate={joinStatusUpdate}
             setJoinStatusUpdate={setJoinStatusUpdate}
           />
         ) : (

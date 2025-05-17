@@ -1,7 +1,12 @@
 import { Link } from "react-router";
 import RemoveWishlistBookButton from "./RemoveWishlistBookButton";
+import dayjs from "dayjs";
 
 export default function WishlistItem({ book, setWishlistUpdate }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY");
+  }
+
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
       <div className="flex-shrink-0">
@@ -29,7 +34,7 @@ export default function WishlistItem({ book, setWishlistUpdate }) {
           <small className="fst-italic">{book.isbn}</small>
         </div>
         <div className="ms-2">
-          <small>Published {book.publication_date}</small>
+          <small>Published {formatDate(book.publication_date)}</small>
         </div>
       </div>
       <span

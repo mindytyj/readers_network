@@ -51,20 +51,23 @@ export default function AddFriendButton({ friendId }) {
           className="text-decoration-none text-dark"
           to={`/account/${user.id}`}
         >
-          <i className="bi bi-person-fill-check text-primary"></i>
+          <i className="bi bi-person-fill-check text-white"></i>{" "}
+          <span className="text-white">Friend Added</span>
         </Link>
       </div>
     ) : (
       <div>
         <Link className="text-decoration-none text-dark" onClick={addFriend}>
-          <i className="bi bi-person-fill-add text-primary"></i>
+          <i className="bi bi-person-fill-add text-white"></i>{" "}
+          <span className="text-white">Add Friend</span>
         </Link>
       </div>
     )
   ) : (
     <div>
       <Link className="text-decoration-none text-dark" to={"/login"}>
-        <i className="bi bi-person-fill-add text-primary"></i>
+        <i className="bi bi-person-fill-add text-white"></i>{" "}
+        <span className="text-white">Add Friend</span>
       </Link>
     </div>
   );

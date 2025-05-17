@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+import { Link } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
 
@@ -27,11 +28,13 @@ export default function RemoveFriendButton({
   }
 
   return (
-    <span>
-      <i
-        className="bi bi-person-fill-dash text-danger"
-        onClick={removeFriend}
-      ></i>
-    </span>
+    <Link className="text-decoration-none text-dark">
+      <span>
+        <i
+          className="bi bi-person-fill-dash text-danger"
+          onClick={removeFriend}
+        ></i>
+      </span>
+    </Link>
   );
 }

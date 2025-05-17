@@ -35,6 +35,16 @@ code {
   scroll-behavior: smooth;
 }
 
+.cardHeight {
+  min-height: 630px;
+  max-height: 630px;
+}
+
+.cardImage {
+  min-height: 450px;
+  max-height: 450px;
+}
+
 textarea {
   resize: none;
 }

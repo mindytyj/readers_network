@@ -183,7 +183,8 @@ async function addFriend(req, res) {
     );
 
     res.status(200).json("Successfully added friend to friend list.");
-  } catch {
+  } catch (err) {
+    console.error(err);
     res.status(400).json("Unable to add friend to friend list.");
   }
 }

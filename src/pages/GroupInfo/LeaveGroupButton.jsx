@@ -12,12 +12,14 @@ export default function LeaveGroupButton({
   async function leaveGroup() {
     try {
       setJoinStatusUpdate(false);
+
       await requestHandler(
         `/api/groups/${groupId}/leave/${user?.id}`,
         "DELETE"
       );
 
       setJoinStatus(0);
+
       setJoinStatusUpdate(true);
     } catch (error) {
       console.error("Failed to leave group.");

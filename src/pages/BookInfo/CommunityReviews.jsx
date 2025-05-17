@@ -1,14 +1,10 @@
-import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { bookAtom } from "../../handlers/bookAtom";
 import requestHandler from "../../handlers/request-handler";
-import { userAtom } from "../../handlers/userAtom";
 import ReviewItem from "./ReviewItem";
 
-export default function CommunityReviews() {
+export default function CommunityReviews({ reviewUpdate }) {
   const { bookId } = useParams();
-  const user = useAtomValue(userAtom);
   const [reviews, setReviews] = useState([]);
   const [likeUpdate, setLikeUpdate] = useState(false);
 
@@ -26,7 +22,7 @@ export default function CommunityReviews() {
       }
     }
     getCommunityReviews();
-  }, [likeUpdate]);
+  }, [likeUpdate, reviewUpdate]);
 
   return (
     <div className="container mt-4 mb-3">

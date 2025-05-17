@@ -1,6 +1,11 @@
 import { Link } from "react-router";
+import dayjs from "dayjs";
 
 export default function ChatsListItem({ chat, userId }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+  }
+
   return (
     <Link
       className="text-decoration-none"
@@ -12,9 +17,13 @@ export default function ChatsListItem({ chat, userId }) {
             {chat.first_name} {chat.last_name}
             <i className="bi bi-chat-fill text-primary ps-2"></i>
           </div>
-          <span className="text-truncate">{chat.message}</span>
+          <span className="text-truncate">
+            {chat.message ? chat.message : "(No messages in chat history)"}
+          </span>
         </div>
-        <small>{chat.sent_date}</small>
+        <small>
+          {chat.sent_date ? formatDate(chat.sent_date) : "Not available"}
+        </small>
       </li>
     </Link>
   );

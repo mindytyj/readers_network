@@ -1,5 +1,5 @@
 import { useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { bookAtom } from "../../handlers/bookAtom";
@@ -11,6 +11,7 @@ import CommunityReviews from "./CommunityReviews";
 export default function BookInfo() {
   const { bookId } = useParams();
   const setBook = useSetAtom(bookAtom);
+  const [reviewUpdate, setReviewUpdate] = useState(false);
 
   useEffect(() => {
     async function getBookInfo() {
@@ -24,8 +25,11 @@ export default function BookInfo() {
     <div className="container mt-4 mb-3">
       <MainBookInfo />
       <SubBookInfo />
-      <UserReview />
-      <CommunityReviews />
+      <UserReview
+        reviewUpdate={reviewUpdate}
+        setReviewUpdate={setReviewUpdate}
+      />
+      <CommunityReviews reviewUpdate={reviewUpdate} />
     </div>
   );
 }

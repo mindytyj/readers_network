@@ -12,7 +12,7 @@ export default function TopicItem({ groupId, topicId, post }) {
           <small>{post.topic_name}</small>
         </div>
         <p className="text-truncate mb-2">{post.sub_topic_description}</p>
-        <small className="mb-2"> comments</small>
+        <small className="mb-2">{post.comments} comment(s)</small>
         <div className="row"></div>
       </div>
     </Link>

@@ -6,7 +6,11 @@ import DeleteGroupButton from "./DeleteGroupButton";
 import JoinGroupButton from "./JoinGroupButton";
 import LeaveGroupButton from "./LeaveGroupButton";
 
-export default function JoinStatusButton({ groupId, setJoinStatusUpdate }) {
+export default function JoinStatusButton({
+  groupId,
+  joinStatusUpdate,
+  setJoinStatusUpdate,
+}) {
   const user = useAtomValue(userAtom);
   const [joinStatus, setJoinStatus] = useState([]);
 
@@ -17,17 +21,25 @@ export default function JoinStatusButton({ groupId, setJoinStatusUpdate }) {
           `/api/groups/${groupId}/members/${user?.id}`,
           "GET"
         );
-        setJoinStatus(userJoinStatus);
+
+        if (userJoinStatus.length > 0) {
+          setJoinStatus(userJoinStatus[0]);
+        } else {
+          setJoinStatus(0);
+        }
       } catch (error) {
+        console.log(error.message);
         console.error("Unable to get user's join status.");
       }
     }
     getJoinStatus();
-  }, []);
+  }, [joinStatusUpdate]);
+
+  console.log(joinStatus);
 
   return (
     <div>
-      {joinStatus.user_id !== user?.id ? (
+      {joinStatus?.user_id !== user?.id ? (
         <button className="btn btn-primary btn-sm">
           <JoinGroupButton
             groupId={groupId}
@@ -35,12 +47,12 @@ export default function JoinStatusButton({ groupId, setJoinStatusUpdate }) {
             setJoinStatusUpdate={setJoinStatusUpdate}
           />
         </button>
-      ) : joinStatus.creator === true ? (
+      ) : joinStatus?.creator === true ? (
         <button className="btn btn-danger btn-sm">
           <DeleteGroupButton groupId={groupId} />
         </button>
       ) : (
-        <button className="btn btn-primary btn-sm">
+        <button className="btn btn-danger btn-sm">
           <LeaveGroupButton
             groupId={groupId}
             joinStatus={joinStatus}

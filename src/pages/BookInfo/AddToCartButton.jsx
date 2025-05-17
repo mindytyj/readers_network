@@ -9,7 +9,7 @@ export default function AddToCartButton() {
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
   const [cartStatus, setCartStatus] = useState([]);
-  const [orderHistory, setOrderHistory] = useState([]);
+  const [access, setAccess] = useState([]);
 
   useEffect(() => {
     async function getCartStatus() {
@@ -32,23 +32,23 @@ export default function AddToCartButton() {
   }, []);
 
   useEffect(() => {
-    async function getOrderHistory() {
+    async function geteBookAccess() {
       if (!user) {
         return;
       }
 
       try {
-        const order = await requestHandler(
-          `/api/orders/${bookId}/${user.id}`,
+        const eBookAccess = await requestHandler(
+          `/api/ebooks/${bookId}/access/${user?.id}`,
           "GET"
         );
 
-        setOrderHistory(order);
+        setAccess(eBookAccess);
       } catch (error) {
-        console.error("Unable to get user's order history.");
+        console.error("Unable to get user's ebook access.");
       }
     }
-    getOrderHistory();
+    geteBookAccess();
   }, []);
 
   async function addToCart() {
@@ -64,7 +64,7 @@ export default function AddToCartButton() {
 
   return user ? (
     cartStatus > 0 ? (
-      orderHistory === 0 ? (
+      access > 0 ? (
         <div>
           <Link
             className="text-decoration-none text-dark"
@@ -83,7 +83,7 @@ export default function AddToCartButton() {
           </Link>
         </div>
       )
-    ) : orderHistory === 0 ? (
+    ) : access > 0 ? (
       <div>
         <Link
           className="text-decoration-none text-dark"

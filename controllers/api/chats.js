@@ -5,7 +5,7 @@ async function getChats(req, res) {
 
   try {
     const chats = await pool.query(
-      "SELECT c.id, (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) AS friendId, u.first_name, u.last_name, u.username, m.message, m.sent_date FROM chats c LEFT JOIN users u ON u.id = (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) LEFT JOIN messages m ON c.id = m.chat_id WHERE c.user_id = ($1) OR c.friend_id = ($1) ORDER BY m.sent_date DESC LIMIT 1",
+      "SELECT DISTINCT ON (c.id) c.id, (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) AS friendId, u.first_name, u.last_name, u.username, m.message, m.sent_date FROM chats c LEFT JOIN users u ON u.id = (CASE WHEN c.user_id = ($1) THEN c.friend_id ELSE c.user_id END) LEFT JOIN messages m ON c.id = m.chat_id WHERE c.user_id = ($1) OR c.friend_id = ($1) ORDER BY c.id, m.sent_date DESC",
       [userId]
     );
 

@@ -31,25 +31,25 @@ export default function Books() {
         </div>
       </div>
       {book?.bookTitle === "" ? (
-        books.map((books) => {
-          return (
-            <div className="row row-cols-1 row-cols-md-4 g-4">
+        <div className="row row-cols-1 row-cols-md-4 g-4">
+          {books.map((books) => {
+            return (
               <div key={books?.id}>
                 <BookCard bookResult={books} setError={setError} />
               </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       ) : book.length > 0 ? (
-        book.map((book) => {
-          return (
-            <div className="row row-cols-1 row-cols-md-4 g-4">
+        <div className="row row-cols-1 row-cols-md-4 g-4">
+          {book.map((book) => {
+            return (
               <div key={book?.id}>
                 <BookCard bookResult={book} setError={setError} />
               </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       ) : (
         <div className="d-flex justify-content-center">
           <h5 className="text-center">No books found.</h5>

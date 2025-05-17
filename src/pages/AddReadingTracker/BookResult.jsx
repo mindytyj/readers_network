@@ -1,7 +1,12 @@
 import { Link } from "react-router";
 import AddBookButton from "./AddBookButton";
+import dayjs from "dayjs";
 
 export default function BookResult({ bookResult, setError, type }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY");
+  }
+
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
       <div className="flex-shrink-0">
@@ -29,7 +34,7 @@ export default function BookResult({ bookResult, setError, type }) {
           <small className="fst-italic">{bookResult.isbn}</small>
         </div>
         <div className="ms-2">
-          <small>Published {bookResult.publication_date}</small>
+          <small>Published {formatDate(bookResult.publication_date)}</small>
         </div>
       </div>
       <span

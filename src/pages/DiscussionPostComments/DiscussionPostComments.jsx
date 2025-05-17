@@ -12,7 +12,6 @@ export default function DiscussionPostComments() {
   const user = useAtomValue(userAtom);
   const [postComments, setPostComments] = useState([]);
   const [commentUpdate, setCommentUpdate] = useState(false);
-  const [likeUpdate, setLikeUpdate] = useState(false);
 
   useEffect(() => {
     async function getPostComments() {
@@ -28,7 +27,7 @@ export default function DiscussionPostComments() {
       }
     }
     getPostComments();
-  }, [commentUpdate, likeUpdate]);
+  }, [commentUpdate]);
 
   return (
     <div className="container mt-4 mb-3">
@@ -46,10 +45,7 @@ export default function DiscussionPostComments() {
           postComments.map((comment) => {
             return (
               <div key={comment?.id}>
-                <TopicPostCommentItem
-                  comment={comment}
-                  setLikeUpdate={setLikeUpdate}
-                />
+                <TopicPostCommentItem comment={comment} />
               </div>
             );
           })

@@ -73,7 +73,7 @@ async function getPosts(req, res) {
     const topicId = req.params.topicId;
 
     const posts = await pool.query(
-      "SELECT p.id, p.discussion_topics_id, d.topic_name, p.sub_topic_title, p.sub_topic_description, p.created_date FROM sub_topics p LEFT JOIN discussion_topics d ON p.discussion_topics_id = d.id WHERE p.group_id = ($1) AND p.discussion_topics_id = ($2) LIMIT 10",
+      "SELECT p.id, p.discussion_topics_id, d.topic_name, p.sub_topic_title, p.sub_topic_description, p.created_date, COUNT(c.id) AS comments FROM sub_topics p LEFT JOIN discussion_topics d ON p.discussion_topics_id = d.id LEFT JOIN sub_topics_comments c ON p.id = c.sub_topics_id WHERE p.group_id = ($1) AND p.discussion_topics_id = ($2) GROUP BY p.id, d.topic_name LIMIT 10",
       [groupId, topicId]
     );
 
@@ -91,7 +91,7 @@ async function getAllPosts(req, res) {
     const topicId = req.params.topicId;
 
     const posts = await pool.query(
-      "SELECT p.id, p.discussion_topics_id, d.topic_name, p.sub_topic_title, p.sub_topic_description, p.created_date FROM sub_topics p LEFT JOIN discussion_topics d ON p.discussion_topics_id = d.id WHERE p.group_id = ($1) AND p.discussion_topics_id = ($2)",
+      "SELECT p.id, p.discussion_topics_id, d.topic_name, p.sub_topic_title, p.sub_topic_description, p.created_date, COUNT(c.id) AS comments FROM sub_topics p LEFT JOIN discussion_topics d ON p.discussion_topics_id = d.id LEFT JOIN sub_topics_comments c ON p.id = c.sub_topics_id WHERE p.group_id = ($1) AND p.discussion_topics_id = ($2) GROUP BY p.id, d.topic_name",
       [groupId, topicId]
     );
 

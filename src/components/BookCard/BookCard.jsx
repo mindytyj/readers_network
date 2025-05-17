@@ -6,11 +6,11 @@ import WishlistBookButton from "../WishlistBookButton/WishlistBookButton";
 export default function BookCard({ bookResult, setError }) {
   return (
     <div className="col">
-      <div className="card">
+      <div className="card cardHeight">
         <Link to={`/books/${bookResult?.id}`}>
           <img
             src={bookResult?.image_url}
-            className="card-img-top"
+            className="card-img-top cardImage"
             alt={bookResult?.title}
           />
         </Link>

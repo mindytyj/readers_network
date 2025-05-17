@@ -44,6 +44,7 @@ export default function BooksInProgress() {
                 <ProfileBookCard
                   book={book}
                   type={"books-in-progress"}
+                  location={"user"}
                   setRemoveBookUpdate={setRemoveBookUpdate}
                 />
               </div>

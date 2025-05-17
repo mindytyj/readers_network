@@ -1,8 +1,13 @@
 import { useAtomValue } from "jotai";
 import { bookAtom } from "../../handlers/bookAtom";
+import dayjs from "dayjs";
 
 export default function SubBookInfo() {
   const book = useAtomValue(bookAtom);
+
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY");
+  }
 
   return (
     <div className="d-flex align-items-center mt-4 mb-3">
@@ -25,8 +30,10 @@ export default function SubBookInfo() {
             <div>
               <p>ISBN: {book.isbn}</p>
               <p>Publisher: {book.publisher_name}</p>
-              <p>Published Date: {book.publication_date}</p>
+              <p>Published Date: {formatDate(book.publication_date)}</p>
               <p>Pages: {book.pages}</p>
+              <p>Genre: {book.genre_name}</p>
+              <p>Language: {book.language_name}</p>
             </div>
           </div>
         </div>

@@ -34,7 +34,7 @@ export default function OrderHistory() {
           {orders?.length > 0 ? (
             orders.map((book) => {
               return (
-                <div key={book?.id}>
+                <div key={book?.order_item_id}>
                   <OrderHistoryItem book={book} />
                 </div>
               );

@@ -1,6 +1,11 @@
 import { Link } from "react-router";
+import dayjs from "dayjs";
 
 export default function OrderHistoryItem({ book }) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+  }
+
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
       <div className="flex-shrink-0">
@@ -31,7 +36,7 @@ export default function OrderHistoryItem({ book }) {
           <small>{book.rental_duration} days rental</small>
         </div>
         <div className="mt-2 ms-2 fst-italic">
-          <small>Rented on {book.created_date}</small>
+          <small>Rented on {formatDate(book.created_date)}</small>
         </div>
       </div>
     </li>

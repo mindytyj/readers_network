@@ -4,13 +4,16 @@ import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
 import AddUserReviewButton from "./AddUserReviewButton";
+import AddReviewModal from "./AddReviewModal";
+import EditUserReviewModal from "./EditUserReviewModal";
 import EditUserReviewButton from "./EditUserReviewButton";
 
-export default function UserReview() {
+export default function UserReview({ reviewUpdate, setReviewUpdate }) {
   const { bookId } = useParams();
   const user = useAtomValue(userAtom);
   const [userReview, setUserReview] = useState([]);
-  const [reviewUpdate, setReviewUpdate] = useState(false);
+  const [userReviewModal, setUserReviewModal] = useState(false);
+  const [addReviewModal, setAddReviewModal] = useState(false);
 
   useEffect(() => {
     async function getUserReview() {
@@ -39,13 +42,15 @@ export default function UserReview() {
           <h5>Rating and Review</h5>
         </div>
       </div>
-      {user && userReview != "" ? (
+      {user && userReview.length > 0 ? (
         <div className="row mt-2 mb-3">
           <div className="flex-shrink-0">
             <div className="list-group">
               <EditUserReviewButton
                 userReview={userReview[0]}
                 setReviewUpdate={setReviewUpdate}
+                userReviewModal={userReviewModal}
+                setUserReviewModal={setUserReviewModal}
               />
             </div>
           </div>
@@ -53,10 +58,25 @@ export default function UserReview() {
       ) : (
         <div className="row text-center mt-2 mb-3">
           <div className="flex-shrink-0">
-            <AddUserReviewButton />
+            <AddUserReviewButton
+              addReviewModal={addReviewModal}
+              setAddReviewModal={setAddReviewModal}
+            />
           </div>
         </div>
       )}
+      <AddReviewModal
+        addReviewModal={addReviewModal}
+        setAddReviewModal={setAddReviewModal}
+        setReviewUpdate={setReviewUpdate}
+      />
+      <EditUserReviewModal
+        bookId={bookId}
+        userReviewModal={userReviewModal}
+        setUserReviewModal={setUserReviewModal}
+        reviewUpdate={reviewUpdate}
+        setReviewUpdate={setReviewUpdate}
+      />
     </div>
   );
 }

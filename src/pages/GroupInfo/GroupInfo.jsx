@@ -24,6 +24,7 @@ export default function GroupInfo() {
     <div className="container mt-4 mb-3">
       <MainGroupInfo
         groupId={groupId}
+        joinStatusUpdate={joinStatusUpdate}
         setJoinStatusUpdate={setJoinStatusUpdate}
       />
       <SubGroupInfo />

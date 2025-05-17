@@ -1,7 +1,12 @@
 import { Link, useNavigate } from "react-router";
+import dayjs from "dayjs";
 
 export default function OrderHistoryItem({ eBook }) {
   const navigate = useNavigate();
+
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+  }
 
   return (
     <li className="list-group-item d-flex justify-content-between align-items-start">
@@ -35,7 +40,7 @@ export default function OrderHistoryItem({ eBook }) {
           <small>{eBook.rental_duration} days rental</small>
         </div>
         <div className="ms-2 fst-italic">
-          <small>Rented on {eBook.created_date}</small>
+          <small>Rented on {formatDate(eBook.created_date)}</small>
         </div>
       </div>
       <span

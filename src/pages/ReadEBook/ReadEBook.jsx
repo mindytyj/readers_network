@@ -42,7 +42,7 @@ export default function ReadEBook() {
       <ReactReader
         location={location}
         locationChanged={locationChanged}
-        url="https://react-reader.metabits.no/files/alice.epub"
+        url="/through-looking-glass.epub"
         epubInitOptions={{
           openAs: "epub",
         }}

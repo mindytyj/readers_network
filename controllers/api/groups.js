@@ -100,7 +100,7 @@ async function getJoinStatus(req, res) {
       [groupId, userId]
     );
 
-    res.status(200).json(member.rows[0]);
+    res.status(200).json(member.rows);
   } catch {
     res.status(400).json("Unable to retrieve user's join status.");
   }
@@ -110,6 +110,18 @@ async function joinGroup(req, res) {
   try {
     const groupId = req.params.groupId;
     const userId = req.params.userId;
+
+    const checkDuplicate = await pool.query(
+      "SELECT group_id, user_id FROM group_members WHERE group_id = ($1) AND user_id = ($2)",
+      [groupId, userId]
+    );
+
+    if (
+      checkDuplicate?.rows[0]?.group_id == groupId &&
+      checkDuplicate?.rows[0]?.user_id == userId
+    ) {
+      throw new Error("User has already joined the group.");
+    }
 
     const addMember = await pool.query(
       "INSERT INTO group_members (group_id, user_id, creator, moderator) VALUES ($1, $2, $3, $4)",

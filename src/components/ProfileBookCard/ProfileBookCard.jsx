@@ -1,7 +1,17 @@
 import { Link } from "react-router";
 import RemoveBookTrackerButton from "../RemoveBookTrackerButton/RemoveBookTrackerButton";
+import dayjs from "dayjs";
 
-export default function ProfileBookCard({ book, type, setRemoveBookUpdate }) {
+export default function ProfileBookCard({
+  book,
+  type,
+  location,
+  setRemoveBookUpdate,
+}) {
+  function formatDate(date) {
+    return dayjs(date).format("DD MMMM YYYY");
+  }
+
   return (
     <div className="card mb-3" style={{ maxWidth: 500 }}>
       <div className="row g-0">
@@ -27,17 +37,21 @@ export default function ProfileBookCard({ book, type, setRemoveBookUpdate }) {
             </p>
             <p className="card-text">
               <small className="text-muted">
-                {type == "completed-books" ? "Completed" : "Added"} on{" "}
-                {book?.created_date}
+                {type === "completed-books" ? "Completed" : "Added"} on{" "}
+                {formatDate(book?.created_date)}
               </small>
             </p>
-            <div>
-              <RemoveBookTrackerButton
-                bookId={book?.book_id}
-                type={type}
-                setRemoveBookUpdate={setRemoveBookUpdate}
-              />
-            </div>
+            {location === "user" ? (
+              <div>
+                <RemoveBookTrackerButton
+                  bookId={book?.book_id}
+                  type={type}
+                  setRemoveBookUpdate={setRemoveBookUpdate}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

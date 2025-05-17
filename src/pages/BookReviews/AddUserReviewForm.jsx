@@ -1,10 +1,13 @@
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
 
-export default function AddUserReviewForm() {
+export default function AddUserReviewForm({
+  showAddReviewModal,
+  setReviewUpdate,
+}) {
   const { bookId } = useParams();
   const [userReview, setUserReview] = useState({
     rating: "1",
@@ -12,7 +15,6 @@ export default function AddUserReviewForm() {
   });
   const [error, setError] = useState("");
   const user = useAtomValue(userAtom);
-  const navigate = useNavigate();
 
   function handleChange(evt) {
     setUserReview({ ...userReview, [evt.target.name]: evt.target.value });
@@ -21,6 +23,8 @@ export default function AddUserReviewForm() {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
+
+    setReviewUpdate(false);
 
     if (userReview.rating === "" || userReview.review === "") {
       setError(
@@ -36,7 +40,12 @@ export default function AddUserReviewForm() {
         reviewData,
       });
 
-      navigate(`/books/${bookId}`);
+      showAddReviewModal();
+      setUserReview({
+        rating: "1",
+        review: "",
+      });
+      setReviewUpdate(true);
     } catch (err) {
       setError("Unable to add rating and review. Please try again later.");
     }
@@ -45,14 +54,15 @@ export default function AddUserReviewForm() {
   return (
     <form autoComplete="off" onSubmit={handleSubmit}>
       <div className="mb-3 row">
-        <label htmlFor="rating" className="col-sm-2 col-form-label">
+        <label htmlFor="rating" className="col-sm-3 col-form-label">
           Rating <span className="text-danger">*</span>
         </label>
-        <div className="col-sm-7">
+        <div>
           <select
             className="form-select"
             id="rating"
             name="rating"
+            value={userReview?.rating}
             onChange={handleChange}
           >
             <option value="1">1 star</option>
@@ -64,17 +74,18 @@ export default function AddUserReviewForm() {
         </div>
       </div>
       <div className="mb-3 row">
-        <label htmlFor="review" className="col-sm-2 col-form-label">
+        <label htmlFor="review" className="col-sm-3 col-form-label">
           Review <span className="text-danger">*</span>
         </label>
-        <div className="col-sm-7">
+        <div>
           <textarea
             className="form-control"
             id="review"
             aria-label="review"
             placeholder="What do you think about the book?"
+            value={userReview?.review}
             name="review"
-            rows="4"
+            rows="5"
             onChange={handleChange}
           />
         </div>

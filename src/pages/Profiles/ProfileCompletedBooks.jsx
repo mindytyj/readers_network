@@ -4,14 +4,14 @@ import requestHandler from "../../handlers/request-handler";
 import ProfileBookCard from "../../components/ProfileBookCard/ProfileBookCard";
 
 export default function ProfileCompletedBooks() {
-  const { userId } = useParams();
+  const { profileId } = useParams();
   const [completedBooks, setCompletedBooks] = useState([]);
 
   useEffect(() => {
     async function getCompletedBooks() {
       try {
         const books = await requestHandler(
-          `/api/books/${userId}/completed-books`,
+          `/api/books/${profileId}/completed-books`,
           "GET"
         );
         setCompletedBooks(books);
@@ -20,7 +20,7 @@ export default function ProfileCompletedBooks() {
       }
     }
     getCompletedBooks();
-  });
+  }, []);
 
   return (
     <div className="mb-4">
@@ -34,7 +34,11 @@ export default function ProfileCompletedBooks() {
           completedBooks.map((book) => {
             return (
               <div key={book?.id}>
-                <ProfileBookCard book={book} type={"completed-books"} />
+                <ProfileBookCard
+                  book={book}
+                  type={"completed-books"}
+                  location={"profile"}
+                />
               </div>
             );
           })
