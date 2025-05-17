@@ -25,8 +25,8 @@ export default function LikeButton({ post, setLikeUpdate }) {
   }, []);
 
   return (
-    <div className="col-md-1">
-      {like.length == 0 ? (
+    <div className="col-4">
+      {like.length === 0 ? (
         <AddLike
           postId={post.id}
           setLike={setLike}

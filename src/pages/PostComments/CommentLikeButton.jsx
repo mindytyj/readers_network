@@ -26,7 +26,7 @@ export default function CommentLikeButton({ comment, setLikeUpdate }) {
 
   return (
     <div className="col">
-      {like.length == 0 ? (
+      {like.length === 0 ? (
         <AddCommentLike
           commentId={comment.id}
           setLike={setLike}

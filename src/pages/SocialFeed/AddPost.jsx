@@ -13,7 +13,7 @@ export default function AddPost({ setPostUpdate }) {
   function handleChange(evt) {
     setPost({ ...post, [evt.target.name]: evt.target.value });
 
-    if (evt.target.value != "") {
+    if (evt.target.value !== "") {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -31,6 +31,8 @@ export default function AddPost({ setPostUpdate }) {
       await requestHandler(`/api/feed/add/${user?.id}`, "POST", {
         postData,
       });
+
+      setPost({ post: "" });
 
       setPostUpdate(true);
     } catch (err) {
@@ -50,6 +52,7 @@ export default function AddPost({ setPostUpdate }) {
           placeholder="What would you like to share?"
           name="post"
           rows="3"
+          value={post.post}
           onChange={handleChange}
         ></textarea>
       </div>

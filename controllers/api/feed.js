@@ -5,7 +5,7 @@ async function getFeedPosts(req, res) {
     const userId = req.params.userId;
 
     const posts = await pool.query(
-      "SELECT s.id, s.user_id, s.post, s.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from feed_likes l where l.feed_post_id = s.id) as likes FROM feed_posts s LEFT JOIN users u ON s.user_id = u.id WHERE s.user_id IN (SELECT friend_id FROM friends WHERE user_id = ($1)) OR s.user_id = ($1);",
+      "SELECT s.id, s.user_id, s.post, s.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from feed_likes l where l.feed_post_id = s.id) as likes FROM feed_posts s LEFT JOIN users u ON s.user_id = u.id WHERE s.user_id IN (SELECT friend_id FROM friends WHERE user_id = ($1)) OR s.user_id = ($1) ORDER BY s.created_date DESC",
       [userId]
     );
 
@@ -88,7 +88,7 @@ async function getFeedComments(req, res) {
     const postId = req.params.postId;
 
     const comments = await pool.query(
-      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from comment_likes l where l.feed_comment_id = c.id) as likes FROM feed_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.feed_post_id = ($1);",
+      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from comment_likes l where l.feed_comment_id = c.id) as likes FROM feed_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.feed_post_id = ($1) ORDER BY c.created_date DESC",
       [postId]
     );
 

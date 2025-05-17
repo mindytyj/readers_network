@@ -12,7 +12,7 @@ export default function CommentButton({ post }) {
   }
 
   return (
-    <div className="col">
+    <div className="col-6">
       <i
         className="bi bi-chat-dots text-primary pe-2"
         onClick={handleClick}

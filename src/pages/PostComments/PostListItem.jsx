@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import requestHandler from "../../handlers/request-handler";
 import dayjs from "dayjs";
 import { Link } from "react-router";
+import AddComment from "./AddComment";
 
-export default function PostListItem({ postId }) {
+export default function PostListItem({ postId, setCommentUpdate }) {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
@@ -26,19 +27,39 @@ export default function PostListItem({ postId }) {
   }
 
   return (
-    <div className="list-group-item list-group-item-action">
-      <div className="d-flex w-100 justify-content-between">
-        <Link
-          className="text-decoration-none text-dark"
-          to={`/profile/${post.user_id}`}
-        >
-          <h5 className="mb-2">
-            {post.first_name} {post.last_name}
-          </h5>
-        </Link>
-        <small>{formatDate(post.created_date)}</small>
+    <section>
+      <div className="row d-flex justify-content-center">
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="d-flex flex-start align-items-center">
+                <div>
+                  <Link
+                    className="text-decoration-none text-dark"
+                    to={`/profile/${post.user_id}`}
+                  >
+                    <h6 className="fw-bold text-primary mb-1">
+                      {post.first_name} {post.last_name}
+                    </h6>
+                  </Link>
+                  <span className="small text-muted font-weight-normal mb-0">
+                    {formatDate(post.created_date)}
+                  </span>
+                </div>
+              </div>
+              <p className="mt-3 mb-4 pb-2">{post.post}</p>
+            </div>
+            <div className="card-footer text-white fw-bold bg-primary bg-opacity-50 py-3 border-0">
+              <div>
+                <AddComment
+                  postId={postId}
+                  setCommentUpdate={setCommentUpdate}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <p className="mb-2">{post.post}</p>
-    </div>
+    </section>
   );
 }

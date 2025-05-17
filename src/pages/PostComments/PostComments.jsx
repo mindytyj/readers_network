@@ -29,16 +29,20 @@ export default function PostComments() {
 
   return (
     <div className="container mt-4 mb-3">
-      <div className="mb-4">
-        <h4>Post</h4>
-      </div>
-      <div className="list-group">
-        <PostListItem postId={postId} />
-      </div>
+      <PostListItem postId={postId} setCommentUpdate={setCommentUpdate} />
       <div className="mt-4 mb-4">
-        <h4>Comments</h4>
+        <h4>
+          Comments{" "}
+          <small
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Scroll down the comment section to view more"
+          >
+            <i className="bi bi-question-circle-fill text-primary"></i>
+          </small>
+        </h4>
       </div>
-      <div className="list-group">
+      <div className="overflow-y-auto discussionsContainer">
         {feedComments?.length > 0 ? (
           feedComments.map((comment) => {
             return (
@@ -55,9 +59,6 @@ export default function PostComments() {
             <h6 className="">No comments available.</h6>
           </div>
         )}
-        <div className="mt-4 mb-4">
-          <AddComment setCommentUpdate={setCommentUpdate} />
-        </div>
       </div>
     </div>
   );

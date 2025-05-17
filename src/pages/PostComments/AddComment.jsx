@@ -1,15 +1,13 @@
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { postAtom } from "../../handlers/postAtom";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
 
-export default function AddComment({ setCommentUpdate }) {
+export default function AddComment({ postId, setCommentUpdate }) {
   const [comment, setComment] = useState({
     comment: "",
   });
   const [disabled, setDisabled] = useState(true);
-  const post = useAtomValue(postAtom);
   const user = useAtomValue(userAtom);
 
   function handleChange(evt) {
@@ -30,13 +28,14 @@ export default function AddComment({ setCommentUpdate }) {
 
       const commentData = { ...comment };
       await requestHandler(
-        `/api/feed/${user?.id}/comments/add/${post?.id}`,
+        `/api/feed/${user?.id}/comments/add/${postId}`,
         "POST",
         {
           commentData,
         }
       );
 
+      setComment({ comment: "" });
       setCommentUpdate(true);
     } catch (err) {
       console.error("Unable to add comment.");
@@ -53,6 +52,7 @@ export default function AddComment({ setCommentUpdate }) {
           id="comment"
           placeholder="Add Comment"
           name="comment"
+          value={comment.comment}
           onChange={handleChange}
         ></input>
       </div>

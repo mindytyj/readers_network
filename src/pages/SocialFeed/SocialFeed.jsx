@@ -26,26 +26,39 @@ export default function SocialFeed() {
 
   return (
     <div className="container mt-4 mb-4">
-      <div className="mb-4">
-        <h4>Social Feed</h4>
-      </div>
-      <div className="mb-4">
-        <AddPost setPostUpdate={setPostUpdate} />
-      </div>
-      <div className="list-group overflow-y-auto messagesContainer rounded-0">
-        {feedPosts?.length > 0 ? (
-          feedPosts.map((post) => {
-            return (
-              <div key={post?.id}>
-                <SocialFeedListItem post={post} setLikeUpdate={setLikeUpdate} />
-              </div>
-            );
-          })
-        ) : (
-          <div className="d-flex justify-content-center mt-2">
-            <h6 className="">No posts available.</h6>
+      <div className="card border-primary">
+        <div>
+          <div className="p-3 rounded-top border-bottom text-white bg-dark">
+            <h4 className="d-flex align-items-center mb-0">My Social Feed</h4>
           </div>
-        )}
+          <div>
+            <div>
+              <div className="card-body text-white fw-bold bg-primary bg-opacity-50 border-bottom pb-2">
+                <div className="mb-4">
+                  <AddPost setPostUpdate={setPostUpdate} />
+                </div>
+              </div>
+              <div className="list-group overflow-y-auto messagesContainer rounded-0">
+                {feedPosts?.length > 0 ? (
+                  feedPosts.map((post) => {
+                    return (
+                      <div key={post?.id}>
+                        <SocialFeedListItem
+                          post={post}
+                          setLikeUpdate={setLikeUpdate}
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="d-flex justify-content-center mt-2">
+                    <h6 className="">No posts available.</h6>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
