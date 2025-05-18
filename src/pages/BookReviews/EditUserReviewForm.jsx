@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
+import { Rating } from "react-simple-star-rating";
 
 export default function EditUserReviewForm({
   userReview,
@@ -18,6 +19,10 @@ export default function EditUserReviewForm({
   function handleChange(evt) {
     setUserReview({ ...userReview, [evt.target.name]: evt.target.value });
     setError("");
+  }
+
+  function handleRating(rating) {
+    setUserReview({ ...userReview, ["rating"]: rating });
   }
 
   async function handleSubmit(evt) {
@@ -46,19 +51,11 @@ export default function EditUserReviewForm({
           Rating <span className="text-danger">*</span>
         </label>
         <div>
-          <select
-            className="form-select"
-            id="rating"
-            name="rating"
-            value={userReview?.rating}
-            onChange={handleChange}
-          >
-            <option value="1">1 star</option>
-            <option value="2">2 stars</option>
-            <option value="3">3 stars</option>
-            <option value="4">4 stars</option>
-            <option value="5">5 stars</option>
-          </select>
+          <Rating
+            initialValue={userReview?.rating}
+            size={"24px"}
+            onClick={handleRating}
+          />
         </div>
       </div>
       <div className="mb-3 row">

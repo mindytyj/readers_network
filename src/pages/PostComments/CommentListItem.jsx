@@ -8,7 +8,7 @@ export default function CommentListItem({ comment, setLikeUpdate }) {
   }
 
   return (
-    <div className="card bg-primary-subtle mb-3">
+    <div className="card bg-primary bg-opacity-10 mb-3">
       <div className="card-body">
         <div className="d-flex flex-start">
           <div className="w-100">

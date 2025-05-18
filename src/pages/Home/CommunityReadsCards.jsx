@@ -1,27 +1,17 @@
-import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import requestHandler from "../../handlers/request-handler";
-import { userAtom } from "../../handlers/userAtom";
 import BookDiscoveryCard from "./BookDiscoveryCard";
 
-export default function BookDiscoveryCardGroup() {
-  const user = useAtomValue(userAtom);
+export default function CommunityReadsCards() {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
-    async function getBookRecommendations() {
-      if (!user) {
-        return;
-      }
-
-      const books = await requestHandler(
-        `/api/books/recommendations/${user.id}`,
-        "GET"
-      );
+    async function getCommunityReads() {
+      const books = await requestHandler(`/api/community/reads`, "GET");
 
       setRecommendations(books);
     }
-    getBookRecommendations();
+    getCommunityReads();
   }, []);
 
   return recommendations?.length > 0 ? (
@@ -34,7 +24,7 @@ export default function BookDiscoveryCardGroup() {
     })
   ) : (
     <div className="d-flex justify-content-center mt-2">
-      <h6 className="">No recommendations available.</h6>
+      <h6 className="">No recent community reads available.</h6>
     </div>
   );
 }

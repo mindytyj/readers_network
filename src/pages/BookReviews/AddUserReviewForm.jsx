@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
+import { Rating } from "react-simple-star-rating";
 
 export default function AddUserReviewForm({
   showAddReviewModal,
@@ -21,15 +22,21 @@ export default function AddUserReviewForm({
     setError("");
   }
 
+  function handleRating(rating) {
+    setUserReview({ ...userReview, ["rating"]: rating });
+  }
+
   async function handleSubmit(evt) {
     evt.preventDefault();
 
     setReviewUpdate(false);
 
-    if (userReview.rating === "" || userReview.review === "") {
-      setError(
-        "There is no review added. Please write a review and try again."
-      );
+    if (
+      userReview.rating === "" ||
+      userReview.review === "" ||
+      userReview.rating === 0
+    ) {
+      setError("There is no rating or review added.");
       return;
     }
 
@@ -58,19 +65,11 @@ export default function AddUserReviewForm({
           Rating <span className="text-danger">*</span>
         </label>
         <div>
-          <select
-            className="form-select"
-            id="rating"
-            name="rating"
-            value={userReview?.rating}
-            onChange={handleChange}
-          >
-            <option value="1">1 star</option>
-            <option value="2">2 stars</option>
-            <option value="3">3 stars</option>
-            <option value="4">4 stars</option>
-            <option value="5">5 stars</option>
-          </select>
+          <Rating
+            initialValue={userReview?.rating}
+            size={"24px"}
+            onClick={handleRating}
+          />
         </div>
       </div>
       <div className="mb-3 row">

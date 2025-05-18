@@ -1,18 +1,16 @@
-import { useAtomValue } from "jotai";
 import { useState } from "react";
 import requestHandler from "../../handlers/request-handler";
-import { userAtom } from "../../handlers/userAtom";
 
-export default function AddGroupForm({ showGroupModal, setGroupUpdate }) {
-  const user = useAtomValue(userAtom);
-  const [groupInfo, setGroupInfo] = useState({
-    groupName: "",
-    groupDesc: "",
-  });
+export default function ManageGroupForm({
+  groupDetails,
+  setGroupDetails,
+  showManageGroupModal,
+  setGroupUpdate,
+}) {
   const [error, setError] = useState("");
 
   function handleChange(evt) {
-    setGroupInfo({ ...groupInfo, [evt.target.name]: evt.target.value });
+    setGroupDetails({ ...groupDetails, [evt.target.name]: evt.target.value });
     setError("");
   }
 
@@ -21,56 +19,48 @@ export default function AddGroupForm({ showGroupModal, setGroupUpdate }) {
 
     setGroupUpdate(false);
 
-    if (groupInfo.groupName === "" || groupInfo.groupDesc === "") {
-      setError("Please fill in the required fields and try again.");
-      return;
-    }
-
     try {
-      const groupData = { ...groupInfo };
+      const groupData = { ...groupDetails };
 
-      await requestHandler(`/api/groups/add/${user.id}`, "POST", {
+      await requestHandler(`/api/groups/edit/${groupDetails?.id}`, "PUT", {
         groupData,
       });
 
-      showGroupModal();
-      setGroupInfo({
-        groupName: "",
-        groupDesc: "",
-      });
+      showManageGroupModal();
+
       setGroupUpdate(true);
     } catch (err) {
-      setError("Unable to add group. Please try again later.");
+      setError("Unable to update group information. Please try again later.");
     }
   }
 
   return (
     <form autoComplete="off" onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="groupName" className="form-label">
+        <label htmlFor="group_name" className="form-label">
           Group Name <span className="text-danger">*</span>
         </label>
         <input
           type="text"
           className="form-control"
-          id="groupName"
-          name="groupName"
+          id="group_name"
+          name="group_name"
+          value={groupDetails?.group_name || ""}
           onChange={handleChange}
-          value={groupInfo.groupName}
           required
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="groupDesc" className="form-label">
+        <label htmlFor="group_description" className="form-label">
           Group Description <span className="text-danger">*</span>
         </label>
         <textarea
           className="form-control"
-          id="groupDesc"
-          name="groupDesc"
+          id="group_description"
+          name="group_description"
+          value={groupDetails?.group_description || ""}
           rows="5"
           onChange={handleChange}
-          value={groupInfo.groupDesc}
           required
         ></textarea>
       </div>

@@ -45,6 +45,10 @@
   max-height: 450px;
 }
 
+.starSize {
+  size: 10px;
+}
+
 textarea {
   resize: none;
 }

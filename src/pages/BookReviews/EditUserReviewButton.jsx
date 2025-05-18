@@ -4,6 +4,7 @@ import { bookAtom } from "../../handlers/bookAtom";
 import { userAtom } from "../../handlers/userAtom";
 import DeleteUserReview from "./DeleteUserReview";
 import dayjs from "dayjs";
+import { Rating } from "react-simple-star-rating";
 
 export default function EditUserReviewButton({
   userReview,
@@ -23,17 +24,19 @@ export default function EditUserReviewButton({
   };
 
   return (
-    <div className="list-group-item list-group-item-action border-primary">
+    <div className="list-group-item bg-primary bg-opacity-10 list-group-item-action border-primary">
       <div className="d-flex w-100 justify-content-between">
         <h5 className="mb-2">
           {user?.first_name} {user?.last_name}
         </h5>
         <small>{formatDate(userReview?.created_date)}</small>
       </div>
-      <p className="mb-2">Rated: {userReview?.rating} star(s)</p>
+      <p className="mb-2">
+        <Rating initialValue={userReview?.rating} readonly size={"24px"} />
+      </p>
       <p className="mb-2">{userReview?.review}</p>
-      <div className="row">
-        <div className="col-md-1">
+      <div className="d-flex flex-row">
+        <div className="me-5">
           <Link
             className="text-decoration-none text-dark"
             onClick={showUserReviewModal}
@@ -42,7 +45,7 @@ export default function EditUserReviewButton({
             <i className="bi bi-pen-fill text-primary pe-2"></i>Edit
           </Link>
         </div>
-        <div className="col-md-2">
+        <div>
           <DeleteUserReview
             bookId={book.id}
             setReviewUpdate={setReviewUpdate}

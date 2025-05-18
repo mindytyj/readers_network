@@ -165,6 +165,38 @@ async function deleteGroup(req, res) {
   }
 }
 
+async function getModStatus(req, res) {
+  try {
+    const groupId = req.params.groupId;
+    const userId = req.params.userId;
+
+    const modStatus = await pool.query(
+      "SELECT user_id, creator, moderator FROM group_members WHERE group_id = ($1) AND user_id = ($2)",
+      [groupId, userId]
+    );
+
+    res.status(200).json(modStatus.rows);
+  } catch {
+    res.status(400).json("Unable to retrieve user's mod status.");
+  }
+}
+
+async function editGroupInformation(req, res) {
+  try {
+    const groupId = req.params.groupId;
+    const data = req.body.groupData;
+
+    await pool.query(
+      "UPDATE groups SET group_name = ($1), group_description = ($2) WHERE id = ($3)",
+      [data.group_name, data.group_description, groupId]
+    );
+
+    res.status(200).json("Successfully updated group information.");
+  } catch {
+    res.status(400).json("Unable to update group information.");
+  }
+}
+
 module.exports = {
   getGroups,
   addGroup,
@@ -174,4 +206,6 @@ module.exports = {
   joinGroup,
   leaveGroup,
   deleteGroup,
+  getModStatus,
+  editGroupInformation,
 };

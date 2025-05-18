@@ -146,7 +146,7 @@ async function getPostComments(req, res) {
     const postId = req.params.postId;
 
     const comments = await pool.query(
-      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username FROM sub_topics_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.sub_topics_id = ($1);",
+      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username FROM sub_topics_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.sub_topics_id = ($1) ORDER BY c.created_date DESC",
       [postId]
     );
 

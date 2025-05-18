@@ -11,6 +11,7 @@ export default function GroupInfo() {
   const { groupId } = useParams();
   const setGroup = useSetAtom(groupAtom);
   const [joinStatusUpdate, setJoinStatusUpdate] = useState(false);
+  const [groupUpdate, setGroupUpdate] = useState(false);
 
   useEffect(() => {
     async function getGroupInfo() {
@@ -18,7 +19,7 @@ export default function GroupInfo() {
       setGroup(group);
     }
     getGroupInfo();
-  }, [joinStatusUpdate]);
+  }, [joinStatusUpdate, groupUpdate]);
 
   return (
     <div className="container mt-4 mb-3">
@@ -26,6 +27,8 @@ export default function GroupInfo() {
         groupId={groupId}
         joinStatusUpdate={joinStatusUpdate}
         setJoinStatusUpdate={setJoinStatusUpdate}
+        groupUpdate={groupUpdate}
+        setGroupUpdate={setGroupUpdate}
       />
       <SubGroupInfo />
       <DiscussionBoard />

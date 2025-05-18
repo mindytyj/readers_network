@@ -5,11 +5,11 @@ export default function OrderHistoryItem({ eBook }) {
   const navigate = useNavigate();
 
   function formatDate(date) {
-    return dayjs(date).format("DD MMMM YYYY hh:mm A");
+    return dayjs(date).format("DD MMMM YYYY");
   }
 
   return (
-    <li className="list-group-item d-flex justify-content-between align-items-start">
+    <li className="list-group-item bg-primary bg-opacity-10 border-white d-flex justify-content-between align-items-start">
       <div className="flex-shrink-0">
         <Link to={`/books/${eBook.id}`}>
           <img

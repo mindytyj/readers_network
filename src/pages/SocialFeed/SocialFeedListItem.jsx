@@ -9,7 +9,7 @@ export default function SocialFeedListItem({ post, setLikeUpdate }) {
   }
 
   return (
-    <div className="d-flex bg-primary-subtle border-white p-3 border-bottom">
+    <div className="d-flex bg-primary bg-opacity-10 border-white p-3 border-bottom">
       <div className="d-flex w-100 ps-3">
         <div>
           <Link
@@ -25,7 +25,7 @@ export default function SocialFeedListItem({ post, setLikeUpdate }) {
             </h6>
           </Link>
           <p>{post.post}</p>
-          <div className="row">
+          <div className="d-flex flex-row">
             <LikeButton post={post} setLikeUpdate={setLikeUpdate} />
             <CommentButton post={post} />
           </div>

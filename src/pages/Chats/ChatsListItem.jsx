@@ -11,7 +11,7 @@ export default function ChatsListItem({ chat, userId }) {
       className="text-decoration-none"
       to={`/account/${userId}/chat/${chat.friendid}/`}
     >
-      <li className="list-group-item d-flex justify-content-between align-items-start">
+      <li className="list-group-item bg-primary bg-opacity-10 border-white d-flex justify-content-between align-items-start">
         <div className="ms-2 me-auto">
           <div className="fw-bold">
             {chat.first_name} {chat.last_name}

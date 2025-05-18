@@ -5,11 +5,14 @@ import { userAtom } from "../../handlers/userAtom";
 import DeleteGroupButton from "./DeleteGroupButton";
 import JoinGroupButton from "./JoinGroupButton";
 import LeaveGroupButton from "./LeaveGroupButton";
+import ManageGroupButton from "./ManageGroupButton";
 
 export default function JoinStatusButton({
   groupId,
   joinStatusUpdate,
   setJoinStatusUpdate,
+  manageGroupModal,
+  setManageGroupModal,
 }) {
   const user = useAtomValue(userAtom);
   const [joinStatus, setJoinStatus] = useState([]);
@@ -28,14 +31,11 @@ export default function JoinStatusButton({
           setJoinStatus(0);
         }
       } catch (error) {
-        console.log(error.message);
         console.error("Unable to get user's join status.");
       }
     }
     getJoinStatus();
   }, [joinStatusUpdate]);
-
-  console.log(joinStatus);
 
   return (
     <div>
@@ -48,9 +48,20 @@ export default function JoinStatusButton({
           />
         </button>
       ) : joinStatus?.creator === true ? (
-        <button className="btn btn-danger btn-sm">
-          <DeleteGroupButton groupId={groupId} />
-        </button>
+        <div className="d-flex flex-row">
+          <div className="me-3">
+            <button className="btn btn-danger btn-sm">
+              <DeleteGroupButton groupId={groupId} />
+            </button>
+          </div>
+          <div>
+            <ManageGroupButton
+              groupId={groupId}
+              manageGroupModal={manageGroupModal}
+              setManageGroupModal={setManageGroupModal}
+            />
+          </div>
+        </div>
       ) : (
         <button className="btn btn-danger btn-sm">
           <LeaveGroupButton

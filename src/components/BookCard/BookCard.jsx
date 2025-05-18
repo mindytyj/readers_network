@@ -20,7 +20,7 @@ export default function BookCard({ bookResult, setError }) {
             by {bookResult?.first_name} {bookResult?.last_name}
           </p>
         </div>
-        <div className="card-footer">
+        <div className="card-footer bg-primary-subtle">
           <div>
             <FutureReadsButton bookId={bookResult?.id} />
             <WishlistBookButton bookId={bookResult?.id} />

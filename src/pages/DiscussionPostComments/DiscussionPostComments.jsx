@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
 import { userAtom } from "../../handlers/userAtom";
-import AddTopicPostComment from "./AddTopicPostComment";
 import TopicPostCommentItem from "./TopicPostCommentItem";
 import TopicPostItem from "./TopicPostItem";
 
@@ -35,12 +34,21 @@ export default function DiscussionPostComments() {
         <h4>Discussion Post</h4>
       </div>
       <div className="list-group">
-        <TopicPostItem postId={postId} />
+        <TopicPostItem postId={postId} setCommentUpdate={setCommentUpdate} />
       </div>
       <div className="mt-4 mb-4">
-        <h4>Post Comments</h4>
+        <h4>
+          Post Comments{" "}
+          <small
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Scroll down the comment section to view more"
+          >
+            <i className="bi bi-question-circle-fill text-primary"></i>
+          </small>
+        </h4>
       </div>
-      <div className="list-group">
+      <div className="overflow-y-auto discussionsContainer">
         {postComments?.length > 0 ? (
           postComments.map((comment) => {
             return (
@@ -53,16 +61,6 @@ export default function DiscussionPostComments() {
           <div className="d-flex justify-content-center mt-2">
             <h6 className="">No comments available.</h6>
           </div>
-        )}
-        {user ? (
-          <div className="mt-4 mb-4">
-            <AddTopicPostComment
-              postId={postId}
-              setCommentUpdate={setCommentUpdate}
-            />
-          </div>
-        ) : (
-          ""
         )}
       </div>
     </div>

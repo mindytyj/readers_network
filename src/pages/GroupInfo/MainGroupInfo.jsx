@@ -1,17 +1,22 @@
 import { useAtomValue } from "jotai";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { groupAtom } from "../../handlers/groupAtom";
 import { userAtom } from "../../handlers/userAtom";
 import JoinStatusButton from "./JoinStatusButton";
+import ManageGroupModal from "./ManageGroupModal";
 
 export default function MainGroupInfo({
   groupId,
   joinStatusUpdate,
   setJoinStatusUpdate,
+  groupUpdate,
+  setGroupUpdate,
 }) {
   const group = useAtomValue(groupAtom);
   const user = useAtomValue(userAtom);
   const navigate = useNavigate();
+  const [manageGroupModal, setManageGroupModal] = useState(false);
 
   return (
     <div className="d-flex align-items-center">
@@ -25,6 +30,8 @@ export default function MainGroupInfo({
             groupId={groupId}
             joinStatusUpdate={joinStatusUpdate}
             setJoinStatusUpdate={setJoinStatusUpdate}
+            manageGroupModal={manageGroupModal}
+            setManageGroupModal={setManageGroupModal}
           />
         ) : (
           <button
@@ -35,6 +42,13 @@ export default function MainGroupInfo({
           </button>
         )}
       </div>
+      <ManageGroupModal
+        groupId={groupId}
+        manageGroupModal={manageGroupModal}
+        setManageGroupModal={setManageGroupModal}
+        groupUpdate={groupUpdate}
+        setGroupUpdate={setGroupUpdate}
+      />
     </div>
   );
 }

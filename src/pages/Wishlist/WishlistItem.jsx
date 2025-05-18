@@ -8,7 +8,7 @@ export default function WishlistItem({ book, setWishlistUpdate }) {
   }
 
   return (
-    <li className="list-group-item d-flex justify-content-between align-items-start">
+    <li className="list-group-item bg-primary bg-opacity-10 border-white d-flex justify-content-between align-items-start">
       <div className="flex-shrink-0">
         <Link to={`/books/${book.id}`}>
           <img

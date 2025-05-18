@@ -29,7 +29,7 @@ export default function ReviewLikeButton({ review, setLikeUpdate }) {
   }, []);
 
   return (
-    <div className="col-md-1">
+    <div className="me-5">
       {like.length == 0 ? (
         <AddLike
           reviewId={review.id}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import requestHandler from "../../handlers/request-handler";
-import AddReviewComment from "./AddReviewComment";
 import ReviewCommentListItem from "./ReviewCommentListItem";
 import ReviewListItem from "./ReviewListItem";
 
@@ -28,10 +27,28 @@ export default function ReviewComments() {
 
   return (
     <div className="container mt-4 mb-3">
-      <div className="mt-4 mb-4">
-        <h4>Comments</h4>
+      <div className="mb-4">
+        <h4>Rating and Review</h4>
       </div>
       <div className="list-group">
+        <ReviewListItem
+          reviewId={reviewId}
+          setCommentUpdate={setCommentUpdate}
+        />
+      </div>
+      <div className="mt-4 mb-4">
+        <h4>
+          Comments{" "}
+          <small
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Scroll down the comment section to view more"
+          >
+            <i className="bi bi-question-circle-fill text-primary"></i>
+          </small>
+        </h4>
+      </div>
+      <div className="overflow-y-auto discussionsContainer">
         {reviewComments?.length > 0 ? (
           reviewComments.map((comment) => {
             return (
@@ -45,12 +62,6 @@ export default function ReviewComments() {
             <h6 className="">No comments available.</h6>
           </div>
         )}
-        <div className="mt-4 mb-4">
-          <AddReviewComment
-            reviewId={reviewId}
-            setCommentUpdate={setCommentUpdate}
-          />
-        </div>
       </div>
     </div>
   );

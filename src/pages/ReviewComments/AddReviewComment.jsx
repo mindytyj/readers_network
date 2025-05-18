@@ -35,6 +35,7 @@ export default function AddReviewComment({ reviewId, setCommentUpdate }) {
         }
       );
 
+      setComment({ comment: "" });
       setCommentUpdate(true);
     } catch (err) {
       console.error("Unable to add comment.");
@@ -51,6 +52,7 @@ export default function AddReviewComment({ reviewId, setCommentUpdate }) {
           id="comment"
           placeholder="Add Comment"
           name="comment"
+          value={comment.comment}
           onChange={handleChange}
         ></input>
       </div>

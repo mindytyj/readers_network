@@ -3,7 +3,7 @@ const router = express.Router();
 const booksCtrl = require("../../controllers/api/books");
 
 router.get("/", booksCtrl.getBooks);
-router.get("/recommendations", booksCtrl.getBookRecommendations);
+router.get("/recommendations/:userId", booksCtrl.getBookRecommendations);
 router.get("/:bookId", booksCtrl.getBookInfo);
 router.get("/:userId/completed-books", booksCtrl.getCompletedBooks);
 router.get("/:userId/books-in-progress", booksCtrl.getBooksInProgress);

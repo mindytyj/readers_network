@@ -31,7 +31,7 @@ export default function CommunityReviews({ reviewUpdate }) {
           <h5>Community Ratings and Reviews</h5>
         </div>
       </div>
-      <div className="list-group">
+      <div className="list-group overflow-y-auto discussionsContainer">
         {reviews?.length > 0 ? (
           reviews.map((review) => {
             return (

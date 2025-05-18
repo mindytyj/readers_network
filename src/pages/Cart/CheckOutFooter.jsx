@@ -7,7 +7,7 @@ export default function CheckOutFooter({ totalCartItems, cartTotal }) {
   const navigate = useNavigate();
 
   return (
-    <footer className="sticky-bottom bg-body-tertiary">
+    <footer className="sticky-bottom bg-primary-subtle rounded">
       <div className="container-fluid">
         <div className="d-flex justify-content-end">
           <h5 className="navbar-brand mt-2">Total ${cartTotal}</h5>

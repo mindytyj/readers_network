@@ -1,11 +1,27 @@
 const { pool } = require("../../config/database");
 
+async function getCommunityReads(req, res) {
+  try {
+    const recommendations = await pool.query(
+      "SELECT books.id, books.title, books.image_url, authors.first_name, authors.last_name FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id LEFT JOIN authors ON books.author_id = authors.id WHERE completion_status = true ORDER BY books_tracker.created_date DESC LIMIT 10"
+    );
+
+    if (!recommendations)
+      throw new Error("There are no recent community reads available.");
+
+    res.status(200).json(recommendations.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(400).json("Unable to retrieve community reads.");
+  }
+}
+
 async function getCommunityReviews(req, res) {
   const bookId = req.params.bookId;
 
   try {
     const communityReviews = await pool.query(
-      "SELECT r.id, r.user_id, r.review, r.rating, r.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from review_likes l where l.review_id = r.id) as likes FROM reviews r LEFT JOIN users u ON r.user_id = u.id WHERE r.book_id = ($1)",
+      "SELECT r.id, r.user_id, r.review, r.rating, r.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from review_likes l where l.review_id = r.id) as likes FROM reviews r LEFT JOIN users u ON r.user_id = u.id WHERE r.book_id = ($1) ORDER BY r.created_date DESC",
       [bookId]
     );
 
@@ -67,12 +83,30 @@ async function removeReviewLike(req, res) {
   }
 }
 
+async function getReview(req, res) {
+  try {
+    const reviewId = req.params.reviewId;
+
+    const review = await pool.query(
+      "SELECT r.id, r.user_id, r.review, r.rating, r.created_date, u.first_name, u.last_name, u.username FROM reviews r LEFT JOIN users u ON r.user_id = u.id WHERE r.id = ($1)",
+      [reviewId]
+    );
+
+    if (!review)
+      throw new Error("There is no book rating and review with the given ID.");
+
+    res.status(200).json(review.rows[0]);
+  } catch {
+    res.status(400).json("Unable to retrieve book rating and review.");
+  }
+}
+
 async function getReviewComments(req, res) {
   try {
     const reviewId = req.params.reviewId;
 
     const comments = await pool.query(
-      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from review_likes l where l.review_id = c.id) as likes FROM review_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.review_id = ($1);",
+      "SELECT c.id, c.user_id, c.comment, c.created_date, u.first_name, u.last_name, u.username, (SELECT COUNT(*) from review_likes l where l.review_id = c.id) as likes FROM review_comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.review_id = ($1) ORDER BY c.created_date DESC",
       [reviewId]
     );
 
@@ -102,10 +136,12 @@ async function addReviewComment(req, res) {
 }
 
 module.exports = {
+  getCommunityReads,
   getCommunityReviews,
   getReviewLikes,
   addReviewLike,
   removeReviewLike,
+  getReview,
   getReviewComments,
   addReviewComment,
 };

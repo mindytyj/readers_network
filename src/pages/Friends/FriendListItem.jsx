@@ -8,7 +8,7 @@ export default function FriendListItem({
   setFriendUpdate,
 }) {
   return (
-    <li className="list-group-item d-flex justify-content-between align-items-start">
+    <li className="list-group-item d-flex bg-primary bg-opacity-10 border-white justify-content-between align-items-start">
       <div className="ms-2 me-auto">
         <Link
           className="text-decoration-none text-dark"

@@ -23,11 +23,11 @@ async function geteBookAccess(req, res) {
     const userId = req.params.userId;
 
     const access = await pool.query(
-      "SELECT order_items.book_id FROM orders LEFT JOIN order_items ON order_items.order_id = orders.id LEFT JOIN books ON books.id = order_items.book_id WHERE orders.user_id = ($1) AND order_items.book_id = ($2) AND DATE_PART('day', CURRENT_TIMESTAMP - orders.created_date::timestamp) <= books.rental_duration",
+      "SELECT order_items.book_id, books.epub_url FROM orders LEFT JOIN order_items ON order_items.order_id = orders.id LEFT JOIN books ON books.id = order_items.book_id WHERE orders.user_id = ($1) AND order_items.book_id = ($2) AND DATE_PART('day', CURRENT_TIMESTAMP - orders.created_date::timestamp) <= books.rental_duration",
       [userId, bookId]
     );
 
-    res.status(200).json(access.rowCount);
+    res.status(200).json(access.rows);
   } catch (error) {
     res.status(400).json("Unable to retrieve user's eBook access.");
   }

@@ -28,6 +28,10 @@ export default function ReadEBook() {
         );
 
         seteBookAccess(access);
+
+        if (access.length === 0) {
+          return navigate("/");
+        }
       } catch {
         console.error("Failed to retrieve user's ebook access.");
       }
@@ -35,14 +39,12 @@ export default function ReadEBook() {
     geteBookAccess();
   }, []);
 
-  return eBookAccess === 0 ? (
-    navigate("/")
-  ) : (
+  return (
     <div className="container eBook">
       <ReactReader
         location={location}
         locationChanged={locationChanged}
-        url="/through-looking-glass.epub"
+        url="/alice.epub"
         epubInitOptions={{
           openAs: "epub",
         }}

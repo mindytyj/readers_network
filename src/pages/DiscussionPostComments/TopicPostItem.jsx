@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import requestHandler from "../../handlers/request-handler";
 import dayjs from "dayjs";
 import { Link } from "react-router";
+import AddTopicPostComment from "./AddTopicPostComment";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../../handlers/userAtom";
 
-export default function TopicPostItem({ postId }) {
+export default function TopicPostItem({ postId, setCommentUpdate }) {
   const [post, setPost] = useState([]);
+  const user = useAtomValue(userAtom);
 
   useEffect(() => {
     async function getPost() {
@@ -26,21 +30,48 @@ export default function TopicPostItem({ postId }) {
   }
 
   return (
-    <div className="list-group-item list-group-item-action">
-      <div className="d-flex w-100 justify-content-between">
-        <h5 className="mb-2">{post.sub_topic_title}</h5>
-        <small>{formatDate(post.created_date)}</small>
+    <section>
+      <div className="row d-flex justify-content-center">
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="d-flex flex-start align-items-center">
+                <div>
+                  <div>
+                    <h5>{post.sub_topic_title}</h5>
+                    <span className="small text-muted font-weight-normal mb-0">
+                      {formatDate(post.created_date)}
+                    </span>
+                  </div>
+
+                  <small>
+                    by{" "}
+                    <Link
+                      className="text-decoration-none text-dark"
+                      to={`/profile/${post.user_id}`}
+                    >
+                      <span className="fw-bold text-primary mb-1">
+                        {post.first_name} {post.last_name}
+                      </span>
+                    </Link>
+                  </small>
+                </div>
+              </div>
+              <p className="mt-3 mb-4 pb-2">{post.sub_topic_description}</p>
+            </div>
+            {user ? (
+              <div className="card-footer text-white fw-bold bg-primary bg-opacity-50 py-3 border-0">
+                <AddTopicPostComment
+                  postId={postId}
+                  setCommentUpdate={setCommentUpdate}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
       </div>
-      <small>
-        by{" "}
-        <Link
-          className="text-decoration-none text-dark"
-          to={`/profile/${post.user_id}`}
-        >
-          {post.first_name} {post.last_name}
-        </Link>
-      </small>
-      <p className="mt-3 mb-2">{post.sub_topic_description}</p>
-    </div>
+    </section>
   );
 }

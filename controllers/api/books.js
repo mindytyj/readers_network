@@ -16,14 +16,19 @@ async function getBooks(req, res) {
 
 async function getBookRecommendations(req, res) {
   try {
+    const userId = req.params.userId;
+
     const genre = await pool.query(
-      "SELECT books.genre_id FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id"
+      "SELECT books.genre_id FROM books_tracker LEFT JOIN books ON books_tracker.book_id = books.id WHERE completion_status = true AND books_tracker.user_id = ($1) ORDER BY created_date DESC LIMIT 1",
+      [userId]
     );
 
-    const genreId = genre.rows[0].genre_id;
+    if (!genre) throw new Error("There are no book recommendations available.");
+
+    const genreId = genre?.rows[0]?.genre_id;
 
     const recommendations = await pool.query(
-      "SELECT books.id, books.title, books.image_url, authors.first_name, authors.last_name FROM books LEFT JOIN authors ON books.author_id = authors.id WHERE books.genre_id = ($1) ORDER BY random() LIMIT 9",
+      "SELECT books.id, books.title, books.image_url, authors.first_name, authors.last_name FROM books LEFT JOIN authors ON books.author_id = authors.id WHERE books.genre_id = ($1) ORDER BY random() LIMIT 10",
       [genreId]
     );
 
@@ -31,7 +36,8 @@ async function getBookRecommendations(req, res) {
       throw new Error("There are no book recommendations available.");
 
     res.status(200).json(recommendations.rows);
-  } catch {
+  } catch (err) {
+    console.error(err.message);
     res.status(400).json("Unable to retrieve book recommendations.");
   }
 }
