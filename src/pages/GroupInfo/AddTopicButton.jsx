@@ -10,6 +10,10 @@ export default function AddTopicButton({ groupId, topicModal, setTopicModal }) {
   useEffect(() => {
     async function getModStatus() {
       try {
+        if (!user) {
+          return;
+        }
+
         const status = await requestHandler(
           `/api/discussions/${groupId}/mod/${user?.id}`,
           "GET"
@@ -27,7 +31,7 @@ export default function AddTopicButton({ groupId, topicModal, setTopicModal }) {
     setTopicModal(!topicModal);
   };
 
-  return modStatus.creator === true ? (
+  return modStatus?.creator === true ? (
     <button
       onClick={showTopicModal}
       aria-expanded={!topicModal ? true : false}

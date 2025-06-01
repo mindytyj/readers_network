@@ -10,7 +10,7 @@ import AddTopicModal from "./AddTopicModal";
 import TopicsList from "./TopicsList";
 import TopicsNavItem from "./TopicsNavItem";
 
-export default function DiscussionBoard() {
+export default function DiscussionBoard({ joinStatusUpdate }) {
   const { groupId } = useParams();
   const user = useAtomValue(userAtom);
   const [topics, setTopics] = useState([]);
@@ -58,6 +58,8 @@ export default function DiscussionBoard() {
           <div className="col-4">
             {user ? (
               <AddPostButton
+                groupId={groupId}
+                joinStatusUpdate={joinStatusUpdate}
                 postModal={postModal}
                 setPostModal={setPostModal}
               />

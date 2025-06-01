@@ -25,10 +25,10 @@ export default function BookDiscoveryCardGroup() {
   }, []);
 
   return recommendations?.length > 0 ? (
-    recommendations.map((recommendation) => {
+    recommendations.map((recommendation, index) => {
       return (
         <div key={recommendation?.id}>
-          <BookDiscoveryCard recommendations={recommendation} />
+          <BookDiscoveryCard recommendations={recommendation} index={index} />
         </div>
       );
     })

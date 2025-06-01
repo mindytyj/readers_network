@@ -64,7 +64,7 @@ export default function AddToCartButton() {
 
   return user ? (
     cartStatus > 0 ? (
-      access > 0 ? (
+      access.length > 0 ? (
         <div>
           <Link
             className="text-decoration-none text-dark"
@@ -83,7 +83,7 @@ export default function AddToCartButton() {
           </Link>
         </div>
       )
-    ) : access > 0 ? (
+    ) : access.length > 0 ? (
       <div>
         <Link
           className="text-decoration-none text-dark"

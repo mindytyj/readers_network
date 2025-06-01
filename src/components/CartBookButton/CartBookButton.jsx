@@ -63,7 +63,7 @@ export default function CartBookButton({ bookId }) {
 
   return user ? (
     cartStatus > 0 ? (
-      access > 0 ? (
+      access.length > 0 ? (
         <Link
           className="text-decoration-none text-dark"
           to={`/ebook-read/${bookId}`}
@@ -78,7 +78,7 @@ export default function CartBookButton({ bookId }) {
           <i className="bi bi-cart-check-fill text-primary"></i>
         </Link>
       )
-    ) : access > 0 ? (
+    ) : access.length > 0 ? (
       <Link
         className="text-decoration-none text-dark"
         to={`/ebook-read/${bookId}`}

@@ -31,7 +31,7 @@ export default function GroupInfo() {
         setGroupUpdate={setGroupUpdate}
       />
       <SubGroupInfo />
-      <DiscussionBoard />
+      <DiscussionBoard joinStatusUpdate={joinStatusUpdate} />
     </div>
   );
 }

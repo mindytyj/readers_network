@@ -1,6 +1,6 @@
-export default function BookDiscoveryCard({ recommendations }) {
+export default function BookDiscoveryCard({ recommendations, index }) {
   return (
-    <div className="carousel-item active">
+    <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
       <div className="card mb-3 me-3">
         <div className="row g-0">
           <div className="col-md-4">

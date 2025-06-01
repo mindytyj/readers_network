@@ -14,7 +14,7 @@ export default function ReviewItem({ review, setLikeUpdate }) {
       <div className="d-flex w-100 justify-content-between">
         <Link
           className="text-decoration-none text-dark"
-          to={`/profile/${review.id}`}
+          to={`/profile/${review.user_id}`}
         >
           <h5 className="mb-2">
             {review.first_name} {review.last_name}

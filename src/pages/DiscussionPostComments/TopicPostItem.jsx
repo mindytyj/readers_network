@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import requestHandler from "../../handlers/request-handler";
 import dayjs from "dayjs";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import AddTopicPostComment from "./AddTopicPostComment";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../../handlers/userAtom";
@@ -9,6 +9,8 @@ import { userAtom } from "../../handlers/userAtom";
 export default function TopicPostItem({ postId, setCommentUpdate }) {
   const [post, setPost] = useState([]);
   const user = useAtomValue(userAtom);
+  const { groupId } = useParams();
+  const [joinStatus, setJoinStatus] = useState([]);
 
   useEffect(() => {
     async function getPost() {
@@ -23,6 +25,30 @@ export default function TopicPostItem({ postId, setCommentUpdate }) {
       }
     }
     getPost();
+  }, []);
+
+  useEffect(() => {
+    async function getJoinStatus() {
+      try {
+        if (!user) {
+          return;
+        }
+
+        const userJoinStatus = await requestHandler(
+          `/api/groups/${groupId}/members/${user?.id}`,
+          "GET"
+        );
+
+        if (userJoinStatus.length > 0) {
+          setJoinStatus(userJoinStatus[0]);
+        } else {
+          setJoinStatus(0);
+        }
+      } catch (error) {
+        console.error("Unable to get user's join status.");
+      }
+    }
+    getJoinStatus();
   }, []);
 
   function formatDate(date) {
@@ -59,7 +85,7 @@ export default function TopicPostItem({ postId, setCommentUpdate }) {
               </div>
               <p className="mt-3 mb-4 pb-2">{post.sub_topic_description}</p>
             </div>
-            {user ? (
+            {user && joinStatus?.user_id === user?.id ? (
               <div className="card-footer text-white fw-bold bg-primary bg-opacity-50 py-3 border-0">
                 <AddTopicPostComment
                   postId={postId}

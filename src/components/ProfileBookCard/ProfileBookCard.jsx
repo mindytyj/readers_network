@@ -13,7 +13,7 @@ export default function ProfileBookCard({
   }
 
   return (
-    <div className="card mb-3" style={{ maxWidth: 500 }}>
+    <div className="card mb-3 me-3" style={{ maxWidth: 500 }}>
       <div className="row g-0">
         <div className="col-md-4">
           <Link to={`/books/${book?.book_id}`}>

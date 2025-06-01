@@ -27,7 +27,7 @@ export default function ReadEBook() {
           "GET"
         );
 
-        seteBookAccess(access);
+        seteBookAccess(access[0]);
 
         if (access.length === 0) {
           return navigate("/");
@@ -44,7 +44,7 @@ export default function ReadEBook() {
       <ReactReader
         location={location}
         locationChanged={locationChanged}
-        url="/alice.epub"
+        url={eBookAccess?.epub_url}
         epubInitOptions={{
           openAs: "epub",
         }}
